@@ -1,5 +1,5 @@
 package sociopath;
-
+//vertex
 public class Vertex<T extends Comparable<T>, N extends Comparable<N>> {
     
     VertexInfo<T> vertexInfo;
