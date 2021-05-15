@@ -1,6 +1,7 @@
 package sociopath;
 
 public class Main {
+//trytry
     
     public static void main(String[] args){
         
