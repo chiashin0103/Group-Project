@@ -10,6 +10,7 @@ public class LibraryBook {
         //Declare & initialization
         Scanner s = new Scanner(System.in);
         Stack<Integer> stack = new Stack<Integer>();
+        System.out.print("Enter the number of book: ");
         int size = s.nextInt();
         int newSize;
         int count = 0;
@@ -17,10 +18,11 @@ public class LibraryBook {
         int[] arr = new int[size];
 
         //User input
+         System.out.print("Enter the heights of books: ");
         String input = s.next();
         input += s.nextLine();
-
-        //store it in array
+        
+            //store it in array
         String[] height = input.split(" ");
         
         //convert to int array
@@ -48,7 +50,7 @@ public class LibraryBook {
         while (newSize>3);
 
         //Print output
-        System.out.println(count);
+        System.out.println("The number of round(s): "+count);
     }
 
     public static Stack<Integer> findRemove(int sort[]) {
