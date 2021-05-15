@@ -2,7 +2,7 @@ package sociopath;
 //trying again!!!
 public class Main {
 //trytry
-    
+// loi testing    
     public static void main(String[] args){
         
         Graph<Integer, Integer> graph = new Graph<>();
