@@ -17,7 +17,7 @@ public class LibraryBook {
         int[] sort = new int[size];
         
         //User input
-         System.out.print("Enter the heights of books: ");
+        System.out.print("Enter the heights of books: ");
         String input = s.next();
         input += s.nextLine();
         
