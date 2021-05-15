@@ -14,8 +14,7 @@ public class LibraryBook {
         int newSize;
         int count = 0;
         int[] sort = new int[size];
-        int[] arr = new int[size];
-
+        
         //User input
         String input = s.next();
         input += s.nextLine();
