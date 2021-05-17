@@ -103,10 +103,13 @@ import java.util.ArrayList;
          int teaching = rn.nextInt(10) + 1;//the people we will be teaching in event 1
          System.out.println("people[we-1]");
          System.out.println(people[we-1]);
-         do{                                // to avoid the number for we and teaching is same
+         
+         ArrayList<Integer> Oureneighbour=graph.getNeighbours(people[we-1]);
+         
+         do{                                // to avoid the number for we and teaching is same and make sure is stranger
          int newrandom = rn.nextInt(10) + 1;
          teaching=newrandom;
-         }while (teaching==we);
+         }while (teaching==we||Oureneighbour.contains(teaching));
          
          System.out.println("You are "+we );//tell we will represent which number
          System.out.println("You are teaching "+teaching+" now" );//tell in event 1 we will be teaching who
@@ -119,26 +122,14 @@ import java.util.ArrayList;
          
              if(answer.equalsIgnoreCase("Yes")){//if success to help him/her
                  
-                 if(graph.hasEdge(people[we-1], people[teaching-1])){//check the graph contain this edges or not
-                graph.setRep(people[we-1],people[teaching-1],(graph.getRep(people[we-1],people[teaching-1])+10));//rep will +10
-                System.out.println(graph.getRep(people[we-1], people[teaching-1]));// for checking later will delete
-                
-                 }
-                 else{
+                 {
                      graph.addEdge(people[we-1],people[teaching-1],10);// no edges so we connect them 
                  }
          }
              else{// answer is no
-                 if(graph.hasEdge(people[we-1], people[teaching-1])){//check the graph contain this edges or not
-                graph.setRep(people[we-1],people[teaching-1],2);//rep set to 2
-                System.out.println(graph.getRep(people[we-1], people[teaching-1]));// for checking later will delete
-                
-                 }
-                 else{
+                 
                      graph.addEdge(people[we-1],people[teaching-1],2);//rep will set to 2
                  System.out.println(graph.getRep(people[we-1], people[teaching-1]));//for checking
-                 }
-                
              }
              
              
@@ -149,7 +140,7 @@ import java.util.ArrayList;
             
              ArrayList<Integer> tostoreneighbour=graph.getNeighbours(people[teaching-1]);
              // put all neighbour into arry list for later use
-             ArrayList<Integer> Oureneighbour=graph.getNeighbours(people[we-1]);
+             
              
              if(answer.equalsIgnoreCase("Yes")){            
                //if successful to help him/her,  He or she might tell his/her friends about you.
