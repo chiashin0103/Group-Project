@@ -18,13 +18,13 @@ public class LibraryBook {
         int[] arr = new int[size];
 
         //User input
-         System.out.print("Enter the heights of books: ");
+        System.out.print("Enter the heights of books: ");
         String input = s.next();
         input += s.nextLine();
-        
-            //store it in array
+
+        //store it in array
         String[] height = input.split(" ");
-        
+
         //convert to int array
         for (int i = 0; i < size; i++) {
             sort[i] = Integer.parseInt(height[i]);
@@ -34,23 +34,18 @@ public class LibraryBook {
             findRemove(sort);
             stack.addAll(findRemove(sort));
             newSize = stack.size();
-            
-            //check whether it has increasing subsequent
-            if (checkIncreasingSubsequent(sort) == true) {
-                sort = new int[newSize];
-                for (int i = newSize - 1; i >= 0; i--) {
-                    sort[i] = stack.pop();
-                }
-                //counting for output
-                count++;
+            sort = new int[newSize];
+            for (int i = newSize - 1; i >= 0; i--) {
+                sort[i] = stack.pop();
             }
-             
-        }
-        //check for size
-        while (newSize>3);
+            //counting for output
+            count++;
+
+        } //check whether it has increasing subsequent
+        while (checkIncreasingSubsequent(sort) == true);
 
         //Print output
-        System.out.println("The number of round(s): "+count);
+        System.out.println("The number of round(s): " + count);
     }
 
     public static Stack<Integer> findRemove(int sort[]) {
@@ -80,9 +75,11 @@ public class LibraryBook {
     static boolean checkIncreasingSubsequent(int[] checking) {
         boolean check = false;
         for (int i = 0; i < checking.length; i++) {
-            if (checking[i] >= checking[i + 1]) {
-                check = true;
-                break;
+            for (int j = i + 1; j < checking.length; j++) {
+                if (checking[i] <= checking[j]) {
+                    check = true;
+                    break;
+                }
             }
         }
         return check;
