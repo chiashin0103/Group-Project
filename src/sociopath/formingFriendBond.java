@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /*joc-output arrangement not the same as example output..*/
-//Event 6
+//Event-6
 public class formingFriendBond {
 
     private int v;
