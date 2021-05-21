@@ -1,11 +1,10 @@
 package sociopath;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-/*joc*/
+/*joc-output arrangement not the same as example output..*/
 //Event 6
 public class formingFriendBond {
 
