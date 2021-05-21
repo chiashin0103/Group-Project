@@ -2,7 +2,10 @@ package sociopath;
 //trying again!!!
 public class Main {
 //trytry
-    
+import java.util.Random;
+import java.util.Scanner;
+import java.util.ArrayList;
+
     public static void main(String[] args){
         
         Graph<Integer, Integer> graph = new Graph<>();
@@ -90,6 +93,110 @@ public class Main {
         System.out.println(graph.getRep(v5,v1));
 
 
+//Event 1
+         
+         
+         Random rn = new Random();
+         
+         int we =rn.nextInt(10)+1;          //we will become anyone one among 1 to 10 just for testing event 1 
+         // later we can put in the initialazation
+         int teaching = rn.nextInt(10) + 1;//the people we will be teaching in event 1
+         System.out.println("people[we-1]");
+         System.out.println(people[we-1]);
+         
+         ArrayList<Integer> Oureneighbour=graph.getNeighbours(people[we-1]);
+         
+         do{                                // to avoid the number for we and teaching is same and make sure is stranger
+         int newrandom = rn.nextInt(10) + 1;
+         teaching=newrandom;
+         }while (teaching==we||Oureneighbour.contains(teaching));
+         
+         System.out.println("You are "+we );//tell we will represent which number
+         System.out.println("You are teaching "+teaching+" now" );//tell in event 1 we will be teaching who
+         System.out.println("Are you help him/her in the lab question? Answer YES or NO");//are you seccess to help her/him
+         
+         System.out.println(graph.getRep(people[we-1], people[teaching-1]));//testing
+         
+         Scanner input=new Scanner(System.in);
+         String answer=input.nextLine();
+         
+             if(answer.equalsIgnoreCase("Yes")){//if success to help him/her
+                 
+                 {
+                     graph.addEdge(people[we-1],people[teaching-1],10);// no edges so we connect them 
+                 }
+         }
+             else{// answer is no
+                 
+                     graph.addEdge(people[we-1],people[teaching-1],2);//rep will set to 2
+                 System.out.println(graph.getRep(people[we-1], people[teaching-1]));//for checking
+             }
+             
+             
+             
+             
+             System.out.println(graph.getNeighbours(people[teaching-1]));// for checking later will delete
+             
+            
+             ArrayList<Integer> tostoreneighbour=graph.getNeighbours(people[teaching-1]);
+             // put all neighbour into arry list for later use
+             
+             
+             if(answer.equalsIgnoreCase("Yes")){            
+               //if successful to help him/her,  He or she might tell his/her friends about you.
+                
+             for(int i = 0; i < tostoreneighbour.size();i++) {
+                 System.out.println(tostoreneighbour.get(i));
+                 System.out.println(people[we-1].getId());
+                 
+                         
+                         if ((tostoreneighbour.get(i) == people[we-1].getId())||(Oureneighbour.contains(tostoreneighbour.get(i)))) {
+  
+                          //System.out.println(tostoreneighbour.get(i)+"have same deeeeeeeeeeeeeeeeeeeeee"); testing will delete later
+                          continue;
+                         }
+                         
+                                        
+                         else{                   
+                    switch (tostoreneighbour.get(i)) {
+                      
+                     case 1:
+                     graph.addEdge(people[we-1],v1,0);
+                      break;
+                     case 2:
+                       graph.addEdge(people[we-1],v2,0);
+                       break;
+                     case 3:
+                       graph.addEdge(people[we-1],v3,0);
+                       break;
+                     case 4:
+                       graph.addEdge(people[we-1],v4,0);
+                       break;
+                    case 5:
+                       graph.addEdge(people[we-1],v5,0);
+                     break;
+                     case 6:
+                       graph.addEdge(people[we-1],v6,0);
+                      break;
+                   case 7:
+                       graph.addEdge(people[we-1],v7,0);
+                       break;
+                     case 8:
+                       graph.addEdge(people[we-1],v8,0);
+                       break;
+                     case 9:
+                       graph.addEdge(people[we-1],v9,0);
+                       break;
+                     case 10:
+                       graph.addEdge(people[we-1],v10,0);                     
+                       break;
+                   }
+                         }
+             }
+             }
+             graph.printEdges();//checking
+            
+             //End of event 1
 
 
 

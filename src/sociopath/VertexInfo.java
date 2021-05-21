@@ -48,5 +48,8 @@ public class VertexInfo <T> {
     public String toString(){
         return "Diving rate : " + this.dive + " Lunch start : " + this.lunchStart + " Lunch period : " + this.lunchPeriod;
     }
-    
+
+    public int getId() {
+        return id;
+    }
 }
