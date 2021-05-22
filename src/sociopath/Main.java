@@ -143,56 +143,9 @@ import java.util.ArrayList;
              
              
              if(answer.equalsIgnoreCase("Yes")){            
-               //if successful to help him/her,  He or she might tell his/her friends about you.
+             //if successful to help him/her,  He or she might tell his/her friends about you.
                 
-             for(int i = 0; i < tostoreneighbour.size();i++) {
-                 System.out.println(tostoreneighbour.get(i));
-                 System.out.println(people[we-1].getId());
-                 
-                         
-                         if ((tostoreneighbour.get(i) == people[we-1].getId())||(Oureneighbour.contains(tostoreneighbour.get(i)))) {
-  
-                          //System.out.println(tostoreneighbour.get(i)+"have same deeeeeeeeeeeeeeeeeeeeee"); testing will delete later
-                          continue;
-                         }
-                         
-                                        
-                         else{                   
-                    switch (tostoreneighbour.get(i)) {
-                      
-                     case 1:
-                     graph.addEdge(people[we-1],v1,0);
-                      break;
-                     case 2:
-                       graph.addEdge(people[we-1],v2,0);
-                       break;
-                     case 3:
-                       graph.addEdge(people[we-1],v3,0);
-                       break;
-                     case 4:
-                       graph.addEdge(people[we-1],v4,0);
-                       break;
-                    case 5:
-                       graph.addEdge(people[we-1],v5,0);
-                     break;
-                     case 6:
-                       graph.addEdge(people[we-1],v6,0);
-                      break;
-                   case 7:
-                       graph.addEdge(people[we-1],v7,0);
-                       break;
-                     case 8:
-                       graph.addEdge(people[we-1],v8,0);
-                       break;
-                     case 9:
-                       graph.addEdge(people[we-1],v9,0);
-                       break;
-                     case 10:
-                       graph.addEdge(people[we-1],v10,0);                     
-                       break;
-                   }
-                         }
-             }
+             //trigger Event 2
              }
              graph.printEdges();//checking
             
