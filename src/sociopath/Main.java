@@ -82,102 +82,120 @@ public class Main {
         System.out.println(graph.getRep(v1, v2));
 
         //Event 1
-        Random rn = new Random();
-
-        int we = rn.nextInt(10) + 1;          //we will become anyone one among 1 to 10 just for testing event 1 
-        // later we can put in the initialazation
-        int teaching = rn.nextInt(10) + 1;//the people we will be teaching in event 1
-        System.out.println("people[we-1]");
-        System.out.println(people[we - 1]);
-
-        ArrayList<Integer> Oureneighbour = graph.getNeighbours(people[we - 1]);
-
-        do {                                // to avoid the number for we and teaching is same and make sure is stranger
-            int newrandom = rn.nextInt(10) + 1;
-            teaching = newrandom;
-        } while (teaching == we || Oureneighbour.contains(teaching));
-
-        System.out.println("You are " + we);//tell we will represent which number
-        System.out.println("You are teaching " + teaching + " now");//tell in event 1 we will be teaching who
-        System.out.println("Are you help him/her in the lab question? Answer YES or NO");//are you seccess to help her/him
-
-        System.out.println(graph.getRep(people[we - 1], people[teaching - 1]));//testing
-
-        Scanner input = new Scanner(System.in);
-        String answer = input.nextLine();
-
-        if (answer.equalsIgnoreCase("Yes")) {//if success to help him/her
-
-            {
-                graph.addEdge(people[we - 1], people[teaching - 1], 10);// no edges so we connect them 
-            }
-        } else {// answer is no
-
-            graph.addEdge(people[we - 1], people[teaching - 1], 2);//rep will set to 2
-            System.out.println(graph.getRep(people[we - 1], people[teaching - 1]));//for checking
-        }
-
-        System.out.println(graph.getNeighbours(people[teaching - 1]));// for checking later will delete
-
-        ArrayList<Integer> tostoreneighbour = graph.getNeighbours(people[teaching - 1]);
-        // put all neighbour into arry list for later use
-
-        if (answer.equalsIgnoreCase("Yes")) {
-            //if successful to help him/her,  He or she might tell his/her friends about you.
-
-            for (int i = 0; i < tostoreneighbour.size(); i++) {
-                System.out.println(tostoreneighbour.get(i));
-                System.out.println(people[we - 1].getId());
-
-                if ((tostoreneighbour.get(i) == people[we - 1].getId()) || (Oureneighbour.contains(tostoreneighbour.get(i)))) {
-
-                    //System.out.println(tostoreneighbour.get(i)+"have same deeeeeeeeeeeeeeeeeeeeee"); testing will delete later
-                    continue;
-                } else {
+         String str="";
+         
+         Random rn = new Random();
+         
+         int we =rn.nextInt(10)+1;          //we will become anyone one among 1 to 10 just for testing event 1 
+         // later we can put in the initialazation
+         int teaching = rn.nextInt(10) + 1;//the people we will be teaching in event 1
+         System.out.println("people[we-1]");
+         System.out.println(people[we-1]);
+         
+         ArrayList<Integer> Oureneighbour=graph.getNeighbours(people[we-1]);
+         
+         do{                                // to avoid the number for we and teaching is same and make sure is stranger
+         int newrandom = rn.nextInt(10) + 1;
+         teaching=newrandom;
+         }while (teaching==we||Oureneighbour.contains(teaching));
+         
+         System.out.println("You are "+we );//tell we will represent which number
+         System.out.println("You are teaching "+teaching+" now" );//tell in event 1 we will be teaching who
+         System.out.println("Are you help him/her in the lab question? Answer YES or NO");//are you seccess to help her/him
+         
+         System.out.println(graph.getRep(people[we-1], people[teaching-1]));//testing
+         
+         Scanner input=new Scanner(System.in);
+         String answer=input.nextLine();
+         
+             if(answer.equalsIgnoreCase("Yes")){//if success to help him/her
+                 
+                 {
+                     graph.addEdge(people[we-1],people[teaching-1],10);// no edges so we connect them 
+                 }
+         }
+             else{// answer is no
+                 
+                     graph.addEdge(people[we-1],people[teaching-1],2);//rep will set to 2
+                 System.out.println(graph.getRep(people[we-1], people[teaching-1]));//for checking
+             }
+             //END OF EVENT 1
+             
+             //For event 2
+             
+             System.out.println(graph.getNeighbours(people[teaching-1]));// for checking later will delete
+             
+            
+             ArrayList<Integer> tostoreneighbour=graph.getNeighbours(people[teaching-1]);
+             // put all neighbour into arry list for later use
+             
+             
+                
+             for(int i = 0; i < tostoreneighbour.size();i++) {
+                 System.out.println(tostoreneighbour.get(i));
+                                   
                     switch (tostoreneighbour.get(i)) {
+                      
+                     case 1:
+                         
+                     chit_chat<Integer, Integer> cc1 = new chit_chat<>(graph,people[we-1],people[teaching-1],v1);
+                     str = "Good";
+                     cc1.strangerToFriend(str);
+                      break;
+                     case 2:
+                     chit_chat<Integer, Integer> cc2 = new chit_chat<>(graph,people[we-1],people[teaching-1],v2);
+                     str = "Good";
+                     cc2.strangerToFriend(str);
+                       break;
+                     case 3:
+                       chit_chat<Integer, Integer> cc3 = new chit_chat<>(graph,people[we-1],people[teaching-1],v3);
+                       str = "Good";
+                     cc3.strangerToFriend(str);
+                       break;
+                     case 4:
+                       chit_chat<Integer, Integer> cc4 = new chit_chat<>(graph,people[we-1],people[teaching-1],v4);
+                       str = "Good";
+                     cc4.strangerToFriend(str);
+                       break;
+                    case 5:
+                       chit_chat<Integer, Integer> cc5 = new chit_chat<>(graph,people[we-1],people[teaching-1],v5);
+                       str = "Good";
+                     cc5.strangerToFriend(str);
+                     break;
+                     case 6:
+                       chit_chat<Integer, Integer> cc6 = new chit_chat<>(graph,people[we-1],people[teaching-1],v6);
+                       str = "Good";
+                     cc6.strangerToFriend(str);
+                      break;
+                   case 7:
+                       chit_chat<Integer, Integer> cc7 = new chit_chat<>(graph,people[we-1],people[teaching-1],v7);
+                       str = "Good";
+                     cc7.strangerToFriend(str);
+                       break;
+                     case 8:
+                       chit_chat<Integer, Integer> cc8 = new chit_chat<>(graph,people[we-1],people[teaching-1],v8);
+                       str = "Good";
+                     cc8.strangerToFriend(str);
+                       break;
+                     case 9:
+                       chit_chat<Integer, Integer> cc9 = new chit_chat<>(graph,people[we-1],people[teaching-1],v9);
+                       str = "Good";
+                     cc9.strangerToFriend(str);
+                       break;
+                     case 10:
+                       chit_chat<Integer, Integer> cc10 = new chit_chat<>(graph,people[we-1],people[teaching-1],v10);
+                       str = "Good";
+                     cc10.strangerToFriend(str);
+                       break;
+                   }
+                         }
+             //End of event 2
 
-                        case 1:
-                            graph.addEdge(people[we - 1], v1, 0);
-                            break;
-                        case 2:
-                            graph.addEdge(people[we - 1], v2, 0);
-                            break;
-                        case 3:
-                            graph.addEdge(people[we - 1], v3, 0);
-                            break;
-                        case 4:
-                            graph.addEdge(people[we - 1], v4, 0);
-                            break;
-                        case 5:
-                            graph.addEdge(people[we - 1], v5, 0);
-                            break;
-                        case 6:
-                            graph.addEdge(people[we - 1], v6, 0);
-                            break;
-                        case 7:
-                            graph.addEdge(people[we - 1], v7, 0);
-                            break;
-                        case 8:
-                            graph.addEdge(people[we - 1], v8, 0);
-                            break;
-                        case 9:
-                            graph.addEdge(people[we - 1], v9, 0);
-                            break;
-                        case 10:
-                            graph.addEdge(people[we - 1], v10, 0);
-                            break;
-                    }
-                }
-            }
-        }
-        graph.printEdges();//checking
-
-        //End of event 1
         //Test for Event 2 - Chit-chat
         System.out.println("-----------------------");
         System.out.println("Test for Chit-Chat");
-        chit_chat<Integer, Integer> cc1 = new chit_chat<>(graph, v1, v2, v5);
-        String str = "Good";
+        //chit_chat<Integer, Integer> cc1 = new chit_chat<>(graph, v1, v2, v5);
+        //String str = "Good";
         cc1.strangerToFriend(str);
         System.out.println(graph.getRep(v1, v5));
         System.out.println(graph.getRep(v5, v1));
