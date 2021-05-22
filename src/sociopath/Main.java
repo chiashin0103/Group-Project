@@ -266,6 +266,11 @@ public class Main {
         cc1.strangerToFriend(str);
         System.out.println(graph.getRep(v1, v5));
         System.out.println(graph.getRep(v5, v1));
-    }
+    
 
+
+
+	//checking for event 3
+	System.out.println("Maximum reputation that can be obtain is " + graph.getMaxRep(v9));
+    }
 }
