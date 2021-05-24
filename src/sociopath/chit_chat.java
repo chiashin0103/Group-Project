@@ -38,20 +38,20 @@ public class chit_chat<T extends Comparable<T>, N extends Comparable<N>> {
     public void strangerToFriend(String str){
         int repGain;
 
-        if(graph.hasEdge(source,receiver)==true){
+        if(graph.hasEdge(source,receiver)==true && graph.hasEdge(receiver,source)==true){
             System.out.println("They already knew each other!");
-        }else if(graph.hasEdge(spreader,receiver)==true){
+        }else if(graph.hasEdge(spreader,receiver)==true && graph.hasEdge(receiver, spreader)==true){
             if(!str.isEmpty() && str.equals("Good")){
-                repGain = (int) (graph.getRep(source, spreader)*0.5);
-                graph.addEdge(source, receiver, repGain);
-                graph.addEdge(receiver,source,1);
+                repGain = (int) (graph.getRep(spreader, source)*0.5);
+                graph.addEdge(receiver, source, repGain);
+                graph.addEdge(source,receiver,1);
                 System.out.println("New friendship built : " + graph.getNeighbours(source) + graph.getNeighbours(receiver));
             }else if (str.isEmpty()){
                 System.out.println("Empty string...");
             }else{
-                repGain = (int) (-graph.getRep(source, spreader));
-                graph.addEdge(source, receiver, repGain);
-                graph.addEdge(receiver,source,1);
+                repGain = (int) (-graph.getRep(spreader, source));
+                graph.addEdge(receiver, source, repGain);
+                graph.addEdge(source, receiver,1);
                 System.out.println("New friendship built : " + graph.getNeighbours(source)  + graph.getNeighbours(receiver));
             }
         }else{

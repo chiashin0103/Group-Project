@@ -30,56 +30,56 @@ public class Main {
 
         //initialize relationship(edges) according to Figure 1 with reputation respectively
         System.out.println("Adding edges...");
-        graph.addEdge(v1, v7, 3);
-        graph.addEdge(v1, v2, 8);
-        graph.addEdge(v2, v6, 7);
-        graph.addEdge(v2, v3, 4);
-        graph.addEdge(v2, v5, 2);
-        graph.addEdge(v2, v1, 5);
-        graph.addEdge(v3, v2, 5);
-        graph.addEdge(v4, v8, 10);
+        graph.addEdge(v1, v7, 4);
+        graph.addEdge(v1, v2, 5);
+        graph.addEdge(v2, v6, 9);
+        graph.addEdge(v2, v3, 5);
+        graph.addEdge(v2, v5, 6);
+        graph.addEdge(v2, v1, 8);
+        graph.addEdge(v3, v2, 4);
+        graph.addEdge(v4, v8, 7);
         graph.addEdge(v4, v10, 7);
-        graph.addEdge(v5, v2, 6);
-        graph.addEdge(v6, v2, 9);
-        graph.addEdge(v7, v1, 4);
-        graph.addEdge(v8, v4, 7);
-        graph.addEdge(v9, v10, 6);
+        graph.addEdge(v5, v2, 2);
+        graph.addEdge(v6, v2, 7);
+        graph.addEdge(v7, v1, 3);
+        graph.addEdge(v8, v4, 10);
+        graph.addEdge(v9, v10, 5);
         graph.addEdge(v10, v4, 7);
-        graph.addEdge(v10, v9, 5);
+        graph.addEdge(v10, v9, 6);
 
-        //Test for Graph.java
-        System.out.println("The number of vertices in graph: " + graph.getSize());
-
-        System.out.println("Vertices in graph : ");
-        for (int i = 1; i <= graph.getSize() - 1; i++) {
-            System.out.print(i + ": " + graph.getVertex(i) + "\t");
-            System.out.println();
-        }
-
-        graph.printEdges();
-
-        System.out.println("Has Vertex? : ");
-        System.out.println(graph.hasVertex(v3));
-
-        System.out.println("Has Edge? :  ");
-        System.out.println(graph.hasEdge(v1, v2));
-        System.out.println(graph.hasEdge(v2, v1));
-
-        System.out.println("Get Vertex :  ");
-        System.out.println(graph.getVertex(3));
-
-        System.out.println("Get Neighbour :  ");
-        System.out.println(graph.getNeighbours(v1));
-
-        System.out.println("Reputation of each edges :  ");
-        System.out.println(graph.getRep(v1, v2));
-        System.out.println(graph.getRep(v2, v1));
-        System.out.println(graph.getRep(v9, v10));
-        System.out.println(graph.getRep(v10, v9));
-
-        System.out.println("Set Reputation :  ");
-        System.out.println(graph.setRep(v1, v2, 6));
-        System.out.println(graph.getRep(v1, v2));
+//        //Test for Graph.java
+//        System.out.println("The number of vertices in graph: " + graph.getSize());
+//
+//        System.out.println("Vertices in graph : ");
+//        for (int i = 1; i <= graph.getSize() - 1; i++) {
+//            System.out.print(i + ": " + graph.getVertex(i) + "\t");
+//            System.out.println();
+//        }
+//
+//        graph.printEdges();
+//
+//        System.out.println("Has Vertex? : ");
+//        System.out.println(graph.hasVertex(v3));
+//
+//        System.out.println("Has Edge? :  ");
+//        System.out.println(graph.hasEdge(v1, v2));
+//        System.out.println(graph.hasEdge(v2, v1));
+//
+//        System.out.println("Get Vertex :  ");
+//        System.out.println(graph.getVertex(3));
+//
+//        System.out.println("Get Neighbour :  ");
+//        System.out.println(graph.getNeighbours(v1));
+//
+//        System.out.println("Reputation of each edges :  ");
+//        System.out.println(graph.getRep(v1, v2));
+//        System.out.println(graph.getRep(v2, v1));
+//        System.out.println(graph.getRep(v9, v10));
+//        System.out.println(graph.getRep(v10, v9));
+//
+//        System.out.println("Set Reputation :  ");
+//        System.out.println(graph.setRep(v1, v2, 6));
+//        System.out.println(graph.getRep(v1, v2));
 
         //Event 1
          String str="";
@@ -258,14 +258,7 @@ public class Main {
              }
              //End of Event 2
 
-        //Test for Event 2 - Chit-chat
-        System.out.println("-----------------------");
-        System.out.println("Test for Chit-Chat");
-        //chit_chat<Integer, Integer> cc1 = new chit_chat<>(graph, v1, v2, v5);
-        //String str = "Good";
-        cc1.strangerToFriend(str);
-        System.out.println(graph.getRep(v1, v5));
-        System.out.println(graph.getRep(v5, v1));
+
     
 
 
