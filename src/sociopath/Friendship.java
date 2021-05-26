@@ -4,7 +4,6 @@ import java.util.*;
 import java.lang.*;
 import java.util.LinkedList;
 
-/*left get input*/
 public class Friendship {
 
     int V;
@@ -55,6 +54,7 @@ public class Friendship {
         visited[u] = false;
     }
 
+
     public static List<List<Integer>> sortList(List<List<Integer>> sortList) {
         Collections.sort(sortList, new Comparator<List<Integer>>() {
             @Override
@@ -82,6 +82,7 @@ public class Friendship {
 
         }
 
+    
         List<List<List<Integer>>> list = new ArrayList<List<List<Integer>>>();
         List<List<Integer>> inlist = new ArrayList<List<Integer>>();
 
@@ -102,17 +103,19 @@ public class Friendship {
             }
 
         }
-
+        
         sortList(inlist);
         System.out.println("You can form the following friendship(s): ");
+
 
         for(int i=0;i<inlist.size();i++){
             System.out.print((i + 1)+ ". ");
             System.out.println(inlist.get(i));
+
+
         }
 
     }
-
 
 
 }

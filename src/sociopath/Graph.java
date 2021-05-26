@@ -228,4 +228,142 @@ public class Graph<T extends Comparable<T>, N extends Comparable<N>> {
        }
    }
    
+   
+       /*Event 3 - find the maximum reputation that can obtain by having lunch with friends.(1 person = 1 rep)
+    -Method : find maximum number of friends that can have lunch with within your lunch period        
+    
+    */
+    
+    public int getMaxRep(VertexInfo<T> v){
+        //get lunch interval of v
+        int startingTime = v.lunchStart;
+        int endingTime = v.lunchStart + v.lunchPeriod;
+        String temp = String.valueOf(endingTime);
+        if(temp.charAt(2)>='6')
+            endingTime+=40;
+        
+        //get lunch interval of all friends
+        int[][] friendsLunchTime = getLunchInterval();
+        
+        //friends who have lunch within the same period
+        int[][] canHaveLunch = new int[size][3];    //store friends' id, lunchstart time, lunchend time
+        int AvailableFriends = 0;                   //number of friends    
+        int exceed = 0;
+        for(int i=0;i<friendsLunchTime.length;i++){
+            if(startingTime==friendsLunchTime[i][1]&&endingTime==friendsLunchTime[i][2])
+                continue;
+            if(friendsLunchTime[i][1]<endingTime&&friendsLunchTime[i][2]>startingTime){ //must start before you end or end after you start
+                canHaveLunch[AvailableFriends] = friendsLunchTime[i];
+                if(friendsLunchTime[i][1]<startingTime)
+                    canHaveLunch[AvailableFriends][1] = startingTime;                   //only save available time of v
+                if(friendsLunchTime[i][2]>endingTime){
+                    canHaveLunch[AvailableFriends][2] = endingTime;                     //only save available time of v
+                    exceed++;
+                }
+                AvailableFriends++;                
+            }
+                
+        }
+        
+        
+        
+        //if only 1 friend available
+        if(AvailableFriends==1){
+            System.out.println("Have Lunch with "+canHaveLunch[1][0]+" from "+canHaveLunch[1][1]+" to "+canHaveLunch[1][2]);
+            return 1;
+        }
+                      
+
+        //sort friends' lunch period increasingly according to their lunch end time
+        for(int i=0;i<AvailableFriends;i++){
+            for(int j=0;j<AvailableFriends-1-i;j++){
+                if(canHaveLunch[j][2]>canHaveLunch[j+1][2]){
+                int[] hold = canHaveLunch[j];
+                canHaveLunch[j] = canHaveLunch[j+1];
+                canHaveLunch[j+1] = hold;
+                }
+                else if(canHaveLunch[j][2]==canHaveLunch[j+1][2]){//if lunch end same, sort according to lunch start time
+                    if(canHaveLunch[j][1]>canHaveLunch[j+1][1]){
+                        int[] hold = canHaveLunch[j];
+                        canHaveLunch[j] = canHaveLunch[j+1];
+                        canHaveLunch[j+1] = hold;
+                        }
+                }
+                    
+            }
+            
+        }
+        
+
+        
+        //To get suitable time for each friends
+        System.out.println("Suggested time");
+        for(int i=0;i<AvailableFriends;i++){
+            
+            //set starting time to eat with each friend as ending time of previous friend
+            if(i!=0){
+                if(canHaveLunch[i][1]<=canHaveLunch[i-1][2])
+                    canHaveLunch[i][1]=canHaveLunch[i-1][2]+1;
+            }
+            
+            //set ending time to eat with each friend
+            if(canHaveLunch[i][2]==endingTime){
+                if(i!=AvailableFriends-1){
+                    if(canHaveLunch[i][1]>=canHaveLunch[i+1][1])
+                        canHaveLunch[i][2] = canHaveLunch[i][1];
+                    else
+                        canHaveLunch[i][2] = canHaveLunch[i+1][1]-1;
+                }
+            }
+            
+            //if friends have same ending time            
+            if(canHaveLunch[i][2]==canHaveLunch[i+1][2])
+                canHaveLunch[i][2]=canHaveLunch[i][1]+1;
+            
+            //checking
+            String check = "";
+            for(int z=0;z<2;z++){
+                check = String.valueOf(canHaveLunch[i][z+1]);
+                if(check.charAt(2)=='6')
+                    canHaveLunch[i][z+1]+=40;
+                else if(check.charAt(2)>'6')
+                    canHaveLunch[i][z+1]-=40;
+            }
+            
+        }
+           
+        
+        //printing
+        int righttime = 0;        
+        for(int i=0;i<AvailableFriends;i++){
+                righttime++;   
+                System.out.println("Have Lunch with "+canHaveLunch[i][0]+" from "+canHaveLunch[i][1]+" to "+canHaveLunch[i][2]);
+
+        }
+        return righttime;
+    }
+    
+    //return lunch interval(start and end) of each friends
+    private int[][] getLunchInterval(){
+        Vertex<T,N> vertex = head;
+        int[][] lunchtime = new int[size][3];
+        int i=0;
+        while(vertex!=null){
+            int lunchEnd = vertex.vertexInfo.lunchStart + vertex.vertexInfo.lunchPeriod;
+            String temp = String.valueOf(lunchEnd);
+            if(temp.charAt(2)>='6')
+                lunchEnd+=40;
+            lunchtime[i][0] = (Integer)vertex.vertexInfo.id;
+            lunchtime[i][1] = vertex.vertexInfo.lunchStart;
+            lunchtime[i][2] = lunchEnd;
+            
+            i++;
+            vertex = vertex.nextVertex;
+        }
+        
+        return lunchtime;
+    }
+    
+    //End of Event 3
+   
 }
