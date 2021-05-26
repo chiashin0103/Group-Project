@@ -5,6 +5,7 @@ import java.lang.*;
 import java.io.*;
 
 /*left get input*/
+//Event-6
 public class Friendship {
 
     int V;

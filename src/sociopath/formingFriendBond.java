@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-/*joc-output arrangement not the same as example output..*/
+/*arrangement*/
 //Event-6
 public class formingFriendBond {
 
@@ -81,9 +81,9 @@ public class formingFriendBond {
         }
         //print output
         System.out.println("");
-        System.out.print("Output: ");
+        System.out.print("You can form the following friendship(s) : ");
+        System.out.println("");
         for (int i = 1; i < n; i++) {
-            System.out.println("");
             for (int j = i + 1; j <= n; j++) {
                 bff.printAllPaths(i, j);
             }
