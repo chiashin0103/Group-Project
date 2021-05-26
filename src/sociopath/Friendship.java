@@ -1,11 +1,10 @@
-
-
 package sociopath;
 
 import java.util.*;
 import java.lang.*;
 import java.io.*;
 
+/*left get input*/
 public class Friendship {
 
     int V;
@@ -21,6 +20,7 @@ public class Friendship {
             adj.put(u, new ArrayList<Integer>());
         }
         adj.get(u).add(v);
+
     }
 
     public List<List<Integer>> getAllPaths(Integer u, Integer v) {
@@ -54,11 +54,26 @@ public class Friendship {
         path.removeLast();
         visited[u] = false;
     }
-    public static void main(String[] args) {
 
+    public static List<List<Integer>> sortList(List<List<Integer>> sortList) {
+        Collections.sort(sortList, new Comparator<List<Integer>>() {
+            @Override
+            public int compare(List<Integer> o1, List<Integer> o2) {
+                return Integer.compare(o1.size(), o2.size());
+            }
+        });
+
+        return sortList;
+    }
+
+    public static void main(String[] args) {
+//        Scanner sc = new Scanner(System.in);
         int n = 4;
         Friendship g = new Friendship(n + 1);
 
+//        for (int i = 0; i < n; i++) {
+//            g.addEdge(sc.nextInt(), sc.nextInt());
+//        }
         g.addEdge(1, 2);
         g.addEdge(2, 3);
         g.addEdge(3, 4);
@@ -68,10 +83,8 @@ public class Friendship {
         g.addEdge(4, 3);
         g.addEdge(2, 4);
 
-
         List<List<List<Integer>>> list = new ArrayList<List<List<Integer>>>();
         List<List<Integer>> inlist = new ArrayList<List<Integer>>();
-
 
         for (int i = 1; i < n; i++) {
             System.out.println("");
@@ -90,20 +103,14 @@ public class Friendship {
             }
 
         }
+        
+        sortList(inlist);
+        System.out.println("You can form the following friendship(s): ");
 
-        System.out.println("Output 1 :");
         for (List<Integer> m : inlist) {
             System.out.println(m);
         }
 
-        System.out.println("Output 2 :");
-        System.out.println(inlist);
-
-
-
-
-
     }
-
 
 }
