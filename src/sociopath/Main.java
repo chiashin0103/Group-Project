@@ -200,6 +200,17 @@ public class Main {
 
 
 
+//        //Test for Event 2 - Chit-chat
+//        System.out.println("-----------------------");
+//        System.out.println("Test for Chit-Chat");
+//        //chit_chat<Integer, Integer> cc1 = new chit_chat<>(graph, v1, v2, v5);
+//        //String str = "Good";
+//        cc1.strangerToFriend(str);
+//        System.out.println(graph.getRep(v1, v5));
+//        System.out.println(graph.getRep(v5, v1));
+    
+
+
 
 
     }
