@@ -103,14 +103,14 @@ public class Friendship {
             }
 
         }
-
+        
         sortList(inlist);
         System.out.println("You can form the following friendship(s): ");
+
         for (List<Integer> m : inlist) {
             System.out.println(m);
         }
 
-        
     }
 
 }
