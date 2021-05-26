@@ -2,10 +2,8 @@ package sociopath;
 
 import java.util.*;
 import java.lang.*;
-import java.io.*;
+import java.util.LinkedList;
 
-/*left get input*/
-//Event-6
 public class Friendship {
 
     int V;
@@ -56,34 +54,35 @@ public class Friendship {
         visited[u] = false;
     }
 
+
     public static List<List<Integer>> sortList(List<List<Integer>> sortList) {
         Collections.sort(sortList, new Comparator<List<Integer>>() {
             @Override
-            public int compare(List<Integer> obj1, List<Integer> obj2) {
-                return Integer.compare(obj1.size(), obj2.size());
+            public int compare(List<Integer> o1, List<Integer> o2) {
+                return Integer.compare(o1.size(), o2.size());
             }
         });
-        
+
         return sortList;
     }
 
     public static void main(String[] args) {
-//        Scanner sc = new Scanner(System.in);
-        int n = 4;
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Input: ");
+        int n = sc.nextInt();
         Friendship g = new Friendship(n + 1);
 
-//        for (int i = 0; i < n; i++) {
-//            g.addEdge(sc.nextInt(), sc.nextInt());
-//        }
-        g.addEdge(1, 2);
-        g.addEdge(2, 3);
-        g.addEdge(3, 4);
-        g.addEdge(4, 2);
-        g.addEdge(2, 1);
-        g.addEdge(3, 2);
-        g.addEdge(4, 3);
-        g.addEdge(2, 4);
+        for (int i = 0; i < n; i++) {
 
+            int l = sc.nextInt();
+            int r = sc.nextInt();
+            g.addEdge(l,r);
+            g.addEdge(r,l);
+
+        }
+
+    
         List<List<List<Integer>>> list = new ArrayList<List<List<Integer>>>();
         List<List<Integer>> inlist = new ArrayList<List<Integer>>();
 
@@ -108,10 +107,15 @@ public class Friendship {
         sortList(inlist);
         System.out.println("You can form the following friendship(s): ");
 
-        for (List<Integer> m : inlist) {
-            System.out.println(m);
+
+        for(int i=0;i<inlist.size();i++){
+            System.out.print((i + 1)+ ". ");
+            System.out.println(inlist.get(i));
+
+
         }
 
     }
+
 
 }
