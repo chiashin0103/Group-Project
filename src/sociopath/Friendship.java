@@ -59,11 +59,11 @@ public class Friendship {
     public static List<List<Integer>> sortList(List<List<Integer>> sortList) {
         Collections.sort(sortList, new Comparator<List<Integer>>() {
             @Override
-            public int compare(List<Integer> o1, List<Integer> o2) {
-                return Integer.compare(o1.size(), o2.size());
+            public int compare(List<Integer> obj1, List<Integer> obj2) {
+                return Integer.compare(obj1.size(), obj2.size());
             }
         });
-
+        
         return sortList;
     }
 
