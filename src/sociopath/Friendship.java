@@ -4,6 +4,7 @@ import java.util.*;
 import java.lang.*;
 import java.util.LinkedList;
 
+//Event-6
 public class Friendship {
 
     int V;
@@ -107,12 +108,9 @@ public class Friendship {
         sortList(inlist);
         System.out.println("You can form the following friendship(s): ");
 
-
         for(int i=0;i<inlist.size();i++){
             System.out.print((i + 1)+ ". ");
             System.out.println(inlist.get(i));
-
-
         }
 
     }
