@@ -15,7 +15,7 @@ public class LibraryBook {
         int newSize;
         int count = 0;
         int[] sort = new int[size];
-        
+
         //User input
         System.out.print("Enter the heights of books: ");
         String input = s.next();
@@ -37,11 +37,12 @@ public class LibraryBook {
             for (int i = newSize - 1; i >= 0; i--) {
                 sort[i] = stack.pop();
             }
+
             //counting for output
             count++;
 
         } //check whether it has increasing subsequent
-        while (checkIncreasingSubsequent(sort) == true);
+        while ( checkIncreasingSubsequent(sort) == true);
 
         //Print output
         System.out.println("The number of round(s): " + count);
@@ -71,16 +72,27 @@ public class LibraryBook {
         return stack3;
     }
 
+
     static boolean checkIncreasingSubsequent(int[] checking) {
+        Stack<Integer> stack = new Stack<>();
         boolean check = false;
-        for (int i = 0; i < checking.length; i++) {
-            for (int j = i + 1; j < checking.length; j++) {
-                if (checking[i] <= checking[j]) {
-                    check = true;
-                    break;
-                }
+        Integer a;
+
+        for (int i = checking.length - 1; i >= 0; i--) {
+            stack.push(checking[i]);
+        }
+        
+        a = stack.pop();
+        
+        while (!stack.isEmpty()) {
+            if (stack.peek() > a) {
+                check = true;
+                break;
+            } else {
+                a = stack.pop();
             }
         }
+
         return check;
     }
 }
