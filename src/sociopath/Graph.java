@@ -3,7 +3,8 @@ package sociopath;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Optional;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 
@@ -372,40 +373,67 @@ public class Graph<T> {
     
     */
     
-//     public boolean canPrevent(VertexInfo<T> stranger, VertexInfo<T> crush){
-//        if(getNeighbours(stranger).contains(crush)){
-//            return false;
-//        }
-//     }
      
      
-     public Optional<Vertex<T>> search(VertexInfo<T> start,VertexInfo<T> crush){
+     public int canPreventRumour(VertexInfo<T> stranger,VertexInfo<T> crush){
         Queue<Vertex<T>> queue = new ArrayDeque<>();
         Vertex<T> startVertex = head;
+        //set sourceVertex as the start of bfs
         while(startVertex!=null){
-            if(startVertex.vertexInfo.equals(start)){
+            if(startVertex.vertexInfo.equals(stranger)){
                 queue.add(startVertex);
                 break;
-                
             }
             startVertex=startVertex.nextVertex;
         }
-        Vertex<T> currentVertex;
-        Set<Vertex<T>> alreadyVisited = new HashSet<>();
-        while(!queue.isEmpty()){
-            currentVertex = queue.remove();
-            System.out.println(currentVertex.vertexInfo);
-            
-            if(currentVertex.vertexInfo.equals(crush)){
-                return Optional.of(currentVertex);
-            }else{
-                alreadyVisited.add(currentVertex);
-                queue.addAll(getNeighbors(currentVertex.vertexInfo));
-                queue.removeAll(alreadyVisited);
-            }
-        }
+        Vertex<T> currentVertex;            
+        Set<Vertex<T>> alreadyVisited = new HashSet<>();    //to avoid visiting same vertex again
+        int day=0;
         
-        return Optional.empty();
+        while(!queue.isEmpty()){
+            int day_size = queue.size();
+            System.out.println("\nDay " + day + ":");
+            while(day_size--!=0){
+                currentVertex = queue.remove();
+                System.out.print(currentVertex.vertexInfo.id + " ");
+
+                if(currentVertex.vertexInfo.equals(crush)){
+                    System.out.println("\nIt only takes " + day + " days to reach your crush!");
+                    ArrayList<Vertex<T>> neighbours = getNeighbors(currentVertex.vertexInfo);
+                    ArrayList<Vertex<T>> upper = new ArrayList<>();
+                    for(int i=0;i<neighbours.size();i++){
+                        if(alreadyVisited.contains(neighbours.get(i))){
+                            upper.add(neighbours.get(i));
+                        }
+                    }
+                    
+                    
+                    if(upper.size()<day){
+                        int temp = 0;
+                        System.out.println("To stop it, you need to convince: " );
+                        for(Vertex<T> a:upper){
+                            System.out.print(a.vertexInfo.id + " on day " + ++temp);
+                            System.out.println("");
+                            
+                        }
+
+                    }else{
+                        
+                    }
+                    
+                    return day;
+                }else{
+                    alreadyVisited.add(currentVertex);
+                    ArrayList<Vertex<T>> neighbours = getNeighbors(currentVertex.vertexInfo);
+                    queue.removeAll(neighbours);
+                    queue.addAll(neighbours);
+                    queue.removeAll(alreadyVisited);
+                }
+            }day++;
+            
+        }
+        System.out.println("Don't worry, your crush will never know about the rumour!");
+        return -1;
          
          
      }

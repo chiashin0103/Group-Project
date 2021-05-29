@@ -46,6 +46,7 @@ public class Main {
         graph.addEdge(v9, v10, 5);
         graph.addEdge(v10, v4, 7);
         graph.addEdge(v10, v9, 6);
+       
 
 //        //Test for Graph.java
 //        System.out.println("The number of vertices in graph: " + graph.getSize());
@@ -277,7 +278,9 @@ public class Main {
 	//checking for event 3
 	System.out.println("Maximum reputation that can be obtain is " + graph.getMaxRep(v9));
         
-        graph.search(v1, v7);
+        graph.search(v2, v7);
+        graph.search(v2, v9);
+        
         
     }
 }

@@ -18,4 +18,8 @@ public class Vertex<T> {
         firstEdge = null;
     }
     
+    public String toString(){
+        return vertexInfo.toString();
+    }
+    
 }
