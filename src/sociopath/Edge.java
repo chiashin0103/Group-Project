@@ -2,23 +2,23 @@ package sociopath;
 
 //initialize reputation (rep) here
 
-public class Edge<T extends Comparable<T>, N extends Comparable<N>> {
+public class Edge<T> {
     
-    Vertex<T,N> toVertex;
+    Vertex<T> toVertex;
     int rep;
-    Edge<T,N> nextEdge;
+    Edge<T> nextEdge;
     
     public Edge(){
         toVertex = null;
         rep=1;
         nextEdge = null;
     }
-    public Edge(Vertex<T,N> destination, int r, Edge<T,N> a){
+    public Edge(Vertex<T> destination, int r, Edge<T> a){
         toVertex = destination;
         if(rep>=1 && rep<=10) rep = r;
         nextEdge = a;
     }
-    public Edge(Vertex<T,N> destination, Edge<T,N> a){
+    public Edge(Vertex<T> destination, Edge<T> a){
         toVertex = destination;
         rep = 1;
         nextEdge = a;

@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Graph<Integer, Integer> graph = new Graph<>();
+        Graph<Integer> graph = new Graph<>();
 
         //Random insert vertex information (id->10 people, diving rate, lunch start hour, lunch period)
         VertexInfo<Integer> v1 = new VertexInfo(1, 50, 1120, 15);
@@ -276,5 +276,8 @@ public class Main {
 
 	//checking for event 3
 	System.out.println("Maximum reputation that can be obtain is " + graph.getMaxRep(v9));
+        
+        graph.search(v1, v7);
+        
     }
 }

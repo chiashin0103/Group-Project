@@ -1,10 +1,10 @@
 package sociopath;
 //vertex
-public class Vertex<T extends Comparable<T>, N extends Comparable<N>> {
+public class Vertex<T> {
     
     VertexInfo<T> vertexInfo;
-    Vertex<T,N> nextVertex;
-    Edge<T,N> firstEdge;
+    Vertex<T> nextVertex;
+    Edge<T> firstEdge;
     
     public Vertex(){
         vertexInfo = null;
@@ -12,7 +12,7 @@ public class Vertex<T extends Comparable<T>, N extends Comparable<N>> {
         firstEdge = null;
     }
     
-    public Vertex(VertexInfo<T> vInfo, Vertex<T,N> next){
+    public Vertex(VertexInfo<T> vInfo, Vertex<T> next){
         vertexInfo = vInfo;
         nextVertex = next;
         firstEdge = null;

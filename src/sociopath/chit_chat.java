@@ -14,12 +14,12 @@ public class chit_chat<T extends Comparable<T>, N extends Comparable<N>> {
     VertexInfo <T> source;
     VertexInfo <T> spreader;
     VertexInfo <T> receiver;
-    Graph<T,N> graph;
+    Graph<T> graph;
     
     public chit_chat(){
         
     }
-    public chit_chat(Graph<T,N> graph, VertexInfo <T> source, VertexInfo <T> spreader, VertexInfo <T> receiver){
+    public chit_chat(Graph<T> graph, VertexInfo <T> source, VertexInfo <T> spreader, VertexInfo <T> receiver){
         this.graph = graph;
         this.source = source;
         this.spreader = spreader;

@@ -1,9 +1,14 @@
 package sociopath;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Queue;
+import java.util.Set;
 
-public class Graph<T extends Comparable<T>, N extends Comparable<N>> {
-    Vertex<T,N> head;
+public class Graph<T> {
+    Vertex<T> head;
     int size;
     
     public Graph(){
@@ -21,7 +26,7 @@ public class Graph<T extends Comparable<T>, N extends Comparable<N>> {
         if(head==null){
             return false;
         }
-        Vertex<T,N> temp = head;
+        Vertex<T> temp = head;
         while(temp!=null){
             if(temp.vertexInfo.equals(v)){
                 return true;
@@ -34,12 +39,12 @@ public class Graph<T extends Comparable<T>, N extends Comparable<N>> {
     //add vertex
     public boolean addVertex(VertexInfo <T> v){
         if(hasVertex(v)==false){
-            Vertex<T,N> temp = head;
-            Vertex<T,N> newVertex = new Vertex<>(v, null);
+            Vertex<T> temp = head;
+            Vertex<T> newVertex = new Vertex<>(v, null);
             if(head==null){
                 head=newVertex;
             }else{
-                Vertex<T,N> previous = head;
+                Vertex<T> previous = head;
                 while(temp!=null){
                     previous = temp;
                     temp=temp.nextVertex;
@@ -57,7 +62,7 @@ public class Graph<T extends Comparable<T>, N extends Comparable<N>> {
    //return all the vertex info to an ArrayList 
    public ArrayList<T> getAllVertexObjects(){
        ArrayList<T> list = new ArrayList<>();
-       Vertex<T,N> temp = head;
+       Vertex<T> temp = head;
        while(temp!=null){
            list.add((T) temp.vertexInfo);
            temp=temp.nextVertex;
@@ -67,19 +72,14 @@ public class Graph<T extends Comparable<T>, N extends Comparable<N>> {
 
    
    //get vertex info at a specific index/position
-   public T getVertex(int pos){
-       if(pos>size-1 || pos<0){
-           return null;
-       }
-       Vertex<T,N> temp = head;
-       while(temp!=null){
-           if(temp.vertexInfo.id==pos){
-               return (T) temp.vertexInfo.toString();
-           }
-           temp=temp.nextVertex;
-       }
-       return null;
-   }
+    public VertexInfo<T> getVertex(int pos){
+        if(pos>size-1||pos<0)
+            return null;
+        Vertex<T> temp = head;
+        for(int i=0;i<pos;i++)
+            temp = temp.nextVertex;
+        return temp.vertexInfo;
+    }
    
    
    //check whether there is an edge
@@ -90,10 +90,10 @@ public class Graph<T extends Comparable<T>, N extends Comparable<N>> {
        if(!hasVertex(source) || !hasVertex(destination)){
            return false;
        }
-       Vertex<T,N> sourceVertex = head;
+       Vertex<T> sourceVertex = head;
        while(sourceVertex!=null){
            if(sourceVertex.vertexInfo.equals(source)){
-               Edge<T,N> currentEdge = sourceVertex.firstEdge;
+               Edge<T> currentEdge = sourceVertex.firstEdge;
                while(currentEdge!=null){
                    if(currentEdge.toVertex.vertexInfo.equals(destination)){
                        return true;
@@ -114,15 +114,15 @@ public class Graph<T extends Comparable<T>, N extends Comparable<N>> {
        if(!hasVertex(source) || !hasVertex(destination)){
            return false;
        }
-       Vertex<T,N> sourceVertex = head;
+       Vertex<T> sourceVertex = head;
        while(sourceVertex!=null){
            if(sourceVertex.vertexInfo.equals(source)){
-               Vertex<T,N> destinationVertex = head;
+               Vertex<T> destinationVertex = head;
                while(destinationVertex!=null){
                    if(destinationVertex.vertexInfo.equals(destination)){
-                       Edge<T,N> currentEdge = sourceVertex.firstEdge;
+                       Edge<T> currentEdge = sourceVertex.firstEdge;
                        int r=0;
-                       Edge<T,N> newEdge = new Edge<>(destinationVertex, r, currentEdge);
+                       Edge<T> newEdge = new Edge<>(destinationVertex, r, currentEdge);
                        newEdge.setRep(rep);
                        sourceVertex.firstEdge=newEdge;
                        
@@ -138,17 +138,37 @@ public class Graph<T extends Comparable<T>, N extends Comparable<N>> {
    
   
    //return all neighbours of a vertex to an ArrayList
-   public ArrayList<Integer> getNeighbours(VertexInfo<T> v){
+   public ArrayList<T> getNeighbours(VertexInfo<T> v){
        if(!hasVertex(v)){
            return null;
        }
-       ArrayList<Integer> list = new ArrayList<Integer>();
-       Vertex<T,N> temp = head;
+       ArrayList<T> list = new ArrayList<T>();
+       Vertex<T> temp = head;
        while(temp!=null){
            if(temp.vertexInfo.equals(v)){
-               Edge<T,N> currentEdge = temp.firstEdge;
+               Edge<T> currentEdge = temp.firstEdge;
                while(currentEdge!=null){
                    list.add(currentEdge.toVertex.vertexInfo.id);
+                   currentEdge=currentEdge.nextEdge;
+               }
+           }
+           temp=temp.nextVertex;
+       }
+       return list;
+   }
+   
+   //getNeighbours return vertex
+   public ArrayList<Vertex<T>> getNeighbors(VertexInfo<T> v){
+       if(!hasVertex(v)){
+           return null;
+       }
+       ArrayList<Vertex<T>> list = new ArrayList<>();
+       Vertex<T> temp = head;
+       while(temp!=null){
+           if(temp.vertexInfo.equals(v)){
+               Edge<T> currentEdge = temp.firstEdge;
+               while(currentEdge!=null){
+                   list.add(currentEdge.toVertex);
                    currentEdge=currentEdge.nextEdge;
                }
            }
@@ -168,13 +188,13 @@ public class Graph<T extends Comparable<T>, N extends Comparable<N>> {
        if(!hasEdge(source, destination)){
            return false;
        }
-       Vertex<T,N> sourceVertex = head;
+       Vertex<T> sourceVertex = head;
        while(sourceVertex!=null){
            if(sourceVertex.vertexInfo.equals(source)){
-               Vertex<T,N> destinationVertex = head;
+               Vertex<T> destinationVertex = head;
                while(destinationVertex!=null){
                    if(destinationVertex.vertexInfo.equals(destination)){
-                       Edge<T,N> currentEdge = sourceVertex.firstEdge;
+                       Edge<T> currentEdge = sourceVertex.firstEdge;
                        currentEdge.setRep(newR);
                        return true;
                    }
@@ -195,10 +215,10 @@ public class Graph<T extends Comparable<T>, N extends Comparable<N>> {
         if(!hasVertex(source) || !hasVertex(destination)){
             return notFound;
         }
-        Vertex<T, N> sourceVertex = head;
+        Vertex<T> sourceVertex = head;
         while(sourceVertex!=null){
             if(sourceVertex.vertexInfo.equals(source)){
-                Edge<T, N> currentEdge = sourceVertex.firstEdge;
+                Edge<T> currentEdge = sourceVertex.firstEdge;
                 while(currentEdge!=null){
                     if(currentEdge.toVertex.vertexInfo.equals(destination)){
                         return currentEdge.rep;
@@ -214,10 +234,10 @@ public class Graph<T extends Comparable<T>, N extends Comparable<N>> {
    
    //print graph
    public void printEdges(){
-       Vertex<T,N> temp = head;
+       Vertex<T> temp = head;
        while(temp!=null){
            System.out.print("# " + temp.vertexInfo.id + " : ");
-           Edge<T,N> currentEdge = temp.firstEdge;
+           Edge<T> currentEdge = temp.firstEdge;
            while(currentEdge!=null){
                System.out.print("[" + temp.vertexInfo.id + "," + currentEdge.toVertex.vertexInfo.id + "]");
                currentEdge = currentEdge.nextEdge;
@@ -233,6 +253,8 @@ public class Graph<T extends Comparable<T>, N extends Comparable<N>> {
     -Method : find maximum number of friends that can have lunch with within your lunch period        
     
     */
+   //change input to lunch time?
+   //use average? - use stack or linkedlist
     
     public int getMaxRep(VertexInfo<T> v){
         //get lunch interval of v
@@ -298,54 +320,33 @@ public class Graph<T extends Comparable<T>, N extends Comparable<N>> {
         
         //To get suitable time for each friends
         System.out.println("Suggested time");
-        for(int i=0;i<AvailableFriends;i++){
-            
-            //set starting time to eat with each friend as ending time of previous friend
-            if(i!=0){
-                if(canHaveLunch[i][1]<=canHaveLunch[i-1][2])
-                    canHaveLunch[i][1]=canHaveLunch[i-1][2]+1;
-            }
-            
-            //set ending time to eat with each friend
-            if(canHaveLunch[i][2]==endingTime){
-                if(i!=AvailableFriends-1){
-                    if(canHaveLunch[i][1]>=canHaveLunch[i+1][1])
-                        canHaveLunch[i][2] = canHaveLunch[i][1];
-                    else
-                        canHaveLunch[i][2] = canHaveLunch[i+1][1]-1;
-                }
-            }
-            
-            //if friends have same ending time            
-            if(canHaveLunch[i][2]==canHaveLunch[i+1][2])
-                canHaveLunch[i][2]=canHaveLunch[i][1]+1;
-            
-            //checking
-            String check = "";
-            for(int z=0;z<2;z++){
-                check = String.valueOf(canHaveLunch[i][z+1]);
-                if(check.charAt(2)=='6')
-                    canHaveLunch[i][z+1]+=40;
-                else if(check.charAt(2)>'6')
-                    canHaveLunch[i][z+1]-=40;
-            }
-            
-        }
-           
+          
         
         //printing
         int righttime = 0;        
         for(int i=0;i<AvailableFriends;i++){
-                righttime++;   
+            if(i==0){
                 System.out.println("Have Lunch with "+canHaveLunch[i][0]+" from "+canHaveLunch[i][1]+" to "+canHaveLunch[i][2]);
+                
+            }else{
+                if(canHaveLunch[i][2]==canHaveLunch[i-1][2])
+                    continue;
+                else if(canHaveLunch[i][1]>canHaveLunch[i-1][2])
+                    System.out.println("Have Lunch with "+canHaveLunch[i][0]+" from "+canHaveLunch[i][1]+" to "+canHaveLunch[i][2]);
+                else
+                    System.out.println("Have Lunch with "+canHaveLunch[i][0]+" from "+(canHaveLunch[i-1][2]+1)+" to "+canHaveLunch[i][2]);
+            }
+            
+            righttime++;   
 
         }
         return righttime;
     }
     
+    
     //return lunch interval(start and end) of each friends
     private int[][] getLunchInterval(){
-        Vertex<T,N> vertex = head;
+        Vertex<T> vertex = head;
         int[][] lunchtime = new int[size][3];
         int i=0;
         while(vertex!=null){
@@ -365,5 +366,49 @@ public class Graph<T extends Comparable<T>, N extends Comparable<N>> {
     }
     
     //End of Event 3
+    
+    
+    /*Event 5: can I prevent the rumour from spreading?
+    
+    */
+    
+//     public boolean canPrevent(VertexInfo<T> stranger, VertexInfo<T> crush){
+//        if(getNeighbours(stranger).contains(crush)){
+//            return false;
+//        }
+//     }
+     
+     
+     public Optional<Vertex<T>> search(VertexInfo<T> start,VertexInfo<T> crush){
+        Queue<Vertex<T>> queue = new ArrayDeque<>();
+        Vertex<T> startVertex = head;
+        while(startVertex!=null){
+            if(startVertex.vertexInfo.equals(start)){
+                queue.add(startVertex);
+                break;
+                
+            }
+            startVertex=startVertex.nextVertex;
+        }
+        Vertex<T> currentVertex;
+        Set<Vertex<T>> alreadyVisited = new HashSet<>();
+        while(!queue.isEmpty()){
+            currentVertex = queue.remove();
+            System.out.println(currentVertex.vertexInfo);
+            
+            if(currentVertex.vertexInfo.equals(crush)){
+                return Optional.of(currentVertex);
+            }else{
+                alreadyVisited.add(currentVertex);
+                queue.addAll(getNeighbors(currentVertex.vertexInfo));
+                queue.removeAll(alreadyVisited);
+            }
+        }
+        
+        return Optional.empty();
+         
+         
+     }
+                
    
 }
