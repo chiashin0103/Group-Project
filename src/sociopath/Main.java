@@ -46,6 +46,7 @@ public class Main {
         graph.addEdge(v9, v10, 5);
         graph.addEdge(v10, v4, 7);
         graph.addEdge(v10, v9, 6);
+
        
 
 //        //Test for Graph.java
@@ -144,52 +145,52 @@ public class Main {
                       
                      case 1:
                          
-                     chit_chat<Integer, Integer> cc1 = new chit_chat<>(graph,people[we-1],people[teaching-1],v1);
+                     chit_chat<Integer> cc1 = new chit_chat<>(graph,people[we-1],people[teaching-1],v1);
                      str = "Good";
                      cc1.strangerToFriend(str);
                       break;
                      case 2:
-                     chit_chat<Integer, Integer> cc2 = new chit_chat<>(graph,people[we-1],people[teaching-1],v2);
+                     chit_chat<Integer> cc2 = new chit_chat<>(graph,people[we-1],people[teaching-1],v2);
                      str = "Good";
                      cc2.strangerToFriend(str);
                        break;
                      case 3:
-                       chit_chat<Integer, Integer> cc3 = new chit_chat<>(graph,people[we-1],people[teaching-1],v3);
+                       chit_chat<Integer> cc3 = new chit_chat<>(graph,people[we-1],people[teaching-1],v3);
                        str = "Good";
                      cc3.strangerToFriend(str);
                        break;
                      case 4:
-                       chit_chat<Integer, Integer> cc4 = new chit_chat<>(graph,people[we-1],people[teaching-1],v4);
+                       chit_chat<Integer> cc4 = new chit_chat<>(graph,people[we-1],people[teaching-1],v4);
                        str = "Good";
                      cc4.strangerToFriend(str);
                        break;
                     case 5:
-                       chit_chat<Integer, Integer> cc5 = new chit_chat<>(graph,people[we-1],people[teaching-1],v5);
+                       chit_chat<Integer> cc5 = new chit_chat<>(graph,people[we-1],people[teaching-1],v5);
                        str = "Good";
                      cc5.strangerToFriend(str);
                      break;
                      case 6:
-                       chit_chat<Integer, Integer> cc6 = new chit_chat<>(graph,people[we-1],people[teaching-1],v6);
+                       chit_chat<Integer> cc6 = new chit_chat<>(graph,people[we-1],people[teaching-1],v6);
                        str = "Good";
                      cc6.strangerToFriend(str);
                       break;
                    case 7:
-                       chit_chat<Integer, Integer> cc7 = new chit_chat<>(graph,people[we-1],people[teaching-1],v7);
+                       chit_chat<Integer> cc7 = new chit_chat<>(graph,people[we-1],people[teaching-1],v7);
                        str = "Good";
                      cc7.strangerToFriend(str);
                        break;
                      case 8:
-                       chit_chat<Integer, Integer> cc8 = new chit_chat<>(graph,people[we-1],people[teaching-1],v8);
+                       chit_chat<Integer> cc8 = new chit_chat<>(graph,people[we-1],people[teaching-1],v8);
                        str = "Good";
                      cc8.strangerToFriend(str);
                        break;
                      case 9:
-                       chit_chat<Integer, Integer> cc9 = new chit_chat<>(graph,people[we-1],people[teaching-1],v9);
+                       chit_chat<Integer> cc9 = new chit_chat<>(graph,people[we-1],people[teaching-1],v9);
                        str = "Good";
                      cc9.strangerToFriend(str);
                        break;
                      case 10:
-                       chit_chat<Integer, Integer> cc10 = new chit_chat<>(graph,people[we-1],people[teaching-1],v10);
+                       chit_chat<Integer> cc10 = new chit_chat<>(graph,people[we-1],people[teaching-1],v10);
                        str = "Good";
                      cc10.strangerToFriend(str);
                        break;
@@ -204,52 +205,52 @@ public class Main {
                       
                      case 1:
                          
-                     chit_chat<Integer, Integer> cc1 = new chit_chat<>(graph,people[we-1],people[teaching-1],v1);
+                     chit_chat<Integer> cc1 = new chit_chat<>(graph,people[we-1],people[teaching-1],v1);
                      str = "Bad";
                      cc1.strangerToFriend(str);
                       break;
                      case 2:
-                     chit_chat<Integer, Integer> cc2 = new chit_chat<>(graph,people[we-1],people[teaching-1],v2);
+                     chit_chat<Integer> cc2 = new chit_chat<>(graph,people[we-1],people[teaching-1],v2);
                      str = "bad";
                      cc2.strangerToFriend(str);
                        break;
                      case 3:
-                       chit_chat<Integer, Integer> cc3 = new chit_chat<>(graph,people[we-1],people[teaching-1],v3);
+                       chit_chat<Integer> cc3 = new chit_chat<>(graph,people[we-1],people[teaching-1],v3);
                        str = "bad";
                      cc3.strangerToFriend(str);
                        break;
                      case 4:
-                       chit_chat<Integer, Integer> cc4 = new chit_chat<>(graph,people[we-1],people[teaching-1],v4);
+                       chit_chat<Integer> cc4 = new chit_chat<>(graph,people[we-1],people[teaching-1],v4);
                        str = "bad";
                      cc4.strangerToFriend(str);
                        break;
                     case 5:
-                       chit_chat<Integer, Integer> cc5 = new chit_chat<>(graph,people[we-1],people[teaching-1],v5);
+                       chit_chat<Integer> cc5 = new chit_chat<>(graph,people[we-1],people[teaching-1],v5);
                        str = "bad";
                      cc5.strangerToFriend(str);
                      break;
                      case 6:
-                       chit_chat<Integer, Integer> cc6 = new chit_chat<>(graph,people[we-1],people[teaching-1],v6);
+                       chit_chat<Integer> cc6 = new chit_chat<>(graph,people[we-1],people[teaching-1],v6);
                        str = "bad";
                      cc6.strangerToFriend(str);
                       break;
                    case 7:
-                       chit_chat<Integer, Integer> cc7 = new chit_chat<>(graph,people[we-1],people[teaching-1],v7);
+                       chit_chat<Integer> cc7 = new chit_chat<>(graph,people[we-1],people[teaching-1],v7);
                        str = "bad";
                      cc7.strangerToFriend(str);
                        break;
                      case 8:
-                       chit_chat<Integer, Integer> cc8 = new chit_chat<>(graph,people[we-1],people[teaching-1],v8);
+                       chit_chat<Integer> cc8 = new chit_chat<>(graph,people[we-1],people[teaching-1],v8);
                        str = "bad";
                      cc8.strangerToFriend(str);
                        break;
                      case 9:
-                       chit_chat<Integer, Integer> cc9 = new chit_chat<>(graph,people[we-1],people[teaching-1],v9);
+                       chit_chat<Integer> cc9 = new chit_chat<>(graph,people[we-1],people[teaching-1],v9);
                        str = "bad";
                      cc9.strangerToFriend(str);
                        break;
                      case 10:
-                       chit_chat<Integer, Integer> cc10 = new chit_chat<>(graph,people[we-1],people[teaching-1],v10);
+                       chit_chat<Integer> cc10 = new chit_chat<>(graph,people[we-1],people[teaching-1],v10);
                        str = "bad";
                      cc10.strangerToFriend(str);
                        break;
@@ -272,14 +273,11 @@ public class Main {
 //        System.out.println(graph.getRep(v5, v1));
     
 
-
-
-
 	//checking for event 3
 	System.out.println("Maximum reputation that can be obtain is " + graph.getMaxRep(v9));
         
-        graph.search(v2, v7);
-        graph.search(v2, v9);
+        graph.canPreventRumour(v2, v7);
+//        graph.canPreventRumour(v2, v9);
         
         
     }

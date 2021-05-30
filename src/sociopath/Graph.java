@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
@@ -81,7 +83,19 @@ public class Graph<T> {
             temp = temp.nextVertex;
         return temp.vertexInfo;
     }
-   
+    
+   public int getIndex(VertexInfo<T> v){
+        Vertex<T> temp = head;
+        int pos = 0;
+        while(temp!=null){
+            if(temp.vertexInfo.equals(v))
+                return pos;
+            temp = temp.nextVertex;
+            pos++;
+        }
+        return -1;
+        
+    }
    
    //check whether there is an edge
    public boolean hasEdge(VertexInfo<T> source, VertexInfo<T> destination){
@@ -377,7 +391,12 @@ public class Graph<T> {
      
      public int canPreventRumour(VertexInfo<T> stranger,VertexInfo<T> crush){
         Queue<Vertex<T>> queue = new ArrayDeque<>();
+        Set<Vertex<T>> alreadyVisited = new HashSet<>();    //to avoid visiting same vertex again
         Vertex<T> startVertex = head;
+        Vertex<T>[] pred = new Vertex[size];
+        for(int i=0;i<size;i++){
+            pred[i] = null;
+        }
         //set sourceVertex as the start of bfs
         while(startVertex!=null){
             if(startVertex.vertexInfo.equals(stranger)){
@@ -387,7 +406,6 @@ public class Graph<T> {
             startVertex=startVertex.nextVertex;
         }
         Vertex<T> currentVertex;            
-        Set<Vertex<T>> alreadyVisited = new HashSet<>();    //to avoid visiting same vertex again
         int day=0;
         
         while(!queue.isEmpty()){
@@ -396,10 +414,20 @@ public class Graph<T> {
             while(day_size--!=0){
                 currentVertex = queue.remove();
                 System.out.print(currentVertex.vertexInfo.id + " ");
-
+                
+                alreadyVisited.add(currentVertex);
+                ArrayList<Vertex<T>> neighbours = getNeighbors(currentVertex.vertexInfo);
+                for(int i=0;i<neighbours.size();i++){
+                    if(alreadyVisited.contains(neighbours.get(i))){
+                        pred[getIndex(currentVertex.vertexInfo)] = neighbours.get(i);
+                    }
+                }
+                queue.removeAll(neighbours);
+                queue.addAll(neighbours);
+                queue.removeAll(alreadyVisited);
+                    
                 if(currentVertex.vertexInfo.equals(crush)){
                     System.out.println("\nIt only takes " + day + " days to reach your crush!");
-                    ArrayList<Vertex<T>> neighbours = getNeighbors(currentVertex.vertexInfo);
                     ArrayList<Vertex<T>> upper = new ArrayList<>();
                     for(int i=0;i<neighbours.size();i++){
                         if(alreadyVisited.contains(neighbours.get(i))){
@@ -420,23 +448,41 @@ public class Graph<T> {
                     }else{
                         
                     }
+
+                    
+                    //get shortest path
+                        LinkedList<Vertex<T>> path = new LinkedList<Vertex<T>>();
+                        Vertex<T> crawl = head;
+                        while(crawl!=null){
+                            if(crawl.vertexInfo.equals(crush))
+                                break;
+                            crawl = crawl.nextVertex;
+                        }
+                        path.add(crawl);
+                        while(pred[getIndex(crawl.vertexInfo)]!=null){
+                            path.add(pred[getIndex(crawl.vertexInfo)]);
+                            crawl = pred[getIndex(crawl.vertexInfo)];
+                        }
+                        for(int j=path.size()-1;j>=0;j--){
+                            System.out.print(path.get(j).vertexInfo.id + " ");
+                        }
                     
                     return day;
-                }else{
-                    alreadyVisited.add(currentVertex);
-                    ArrayList<Vertex<T>> neighbours = getNeighbors(currentVertex.vertexInfo);
-                    queue.removeAll(neighbours);
-                    queue.addAll(neighbours);
-                    queue.removeAll(alreadyVisited);
                 }
             }day++;
             
+            
+            
         }
+        
+        
         System.out.println("Don't worry, your crush will never know about the rumour!");
         return -1;
          
          
      }
+     
+     
                 
    
 }
