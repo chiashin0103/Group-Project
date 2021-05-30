@@ -4,16 +4,16 @@ package sociopath;
 
 public class VertexInfo <T> {
     
-    int id;
+    T id;
     int dive = 1; // diving rate
     int lunchStart = 1100; // lunch starting time
     int lunchPeriod = 6; // lunch period
     
-    public VertexInfo(int id){
+    public VertexInfo(T id){
         this.id = id;
     }
     
-    public VertexInfo(int id, int dive, int lunchStart, int lunchPeriod){
+    public VertexInfo(T id, int dive, int lunchStart, int lunchPeriod){
         this.id = id;
         if(dive>0 && dive<100) this.dive=dive;
         if(lunchStart>=1100 && lunchStart<=1400) this.lunchStart=lunchStart;
@@ -46,10 +46,10 @@ public class VertexInfo <T> {
     }
     
     public String toString(){
-        return "Diving rate : " + this.dive + " Lunch start : " + this.lunchStart + " Lunch period : " + this.lunchPeriod;
+        return "ID : " + this.id + " Diving rate : " + this.dive + " Lunch start : " + this.lunchStart + " Lunch period : " + this.lunchPeriod;
     }
 
-    public int getId() {
+    public T getId() {
         return id;
     }
 }
