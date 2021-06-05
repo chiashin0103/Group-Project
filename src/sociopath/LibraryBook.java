@@ -18,17 +18,10 @@ public class LibraryBook {
 
         //User input
         System.out.print("Enter the heights of books: ");
-        String input = s.next();
-        input += s.nextLine();
-
-        //store it in array
-        String[] height = input.split(" ");
-
-        //convert to int array
-        for (int i = 0; i < size; i++) {
-            sort[i] = Integer.parseInt(height[i]);
+        for (int i = 0; i < sort.length; i++) {
+            sort[i] = s.nextInt();
         }
-
+        
         do {
             findRemove(sort);
             stack.addAll(findRemove(sort));
@@ -42,7 +35,7 @@ public class LibraryBook {
             count++;
 
         } //check whether it has increasing subsequent
-        while ( checkIncreasingSubsequent(sort) == true);
+        while (checkIncreasingSubsequent(sort) == true);
 
         //Print output
         System.out.println("The number of round(s): " + count);
@@ -72,7 +65,6 @@ public class LibraryBook {
         return stack3;
     }
 
-
     static boolean checkIncreasingSubsequent(int[] checking) {
         Stack<Integer> stack = new Stack<>();
         boolean check = false;
@@ -81,9 +73,9 @@ public class LibraryBook {
         for (int i = checking.length - 1; i >= 0; i--) {
             stack.push(checking[i]);
         }
-        
+
         a = stack.pop();
-        
+
         while (!stack.isEmpty()) {
             if (stack.peek() > a) {
                 check = true;
