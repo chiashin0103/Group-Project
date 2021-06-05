@@ -58,6 +58,7 @@ public class visualizeOutput extends JPanel {
 
     public void addEdge(int u, int v) {
         edge.add(new edges(u, v));
+         edge.add(new edges(v, u));
         this.repaint();
     }
 
