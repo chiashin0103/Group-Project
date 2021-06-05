@@ -3,6 +3,7 @@ package sociopath;
 import java.util.*;
 import java.lang.*;
 import java.util.LinkedList;
+import javax.swing.JFrame;
 
 //Event-6
 public class Friendship {
@@ -55,7 +56,6 @@ public class Friendship {
         visited[u] = false;
     }
 
-
     public static List<List<Integer>> sortList(List<List<Integer>> sortList) {
         Collections.sort(sortList, new Comparator<List<Integer>>() {
             @Override
@@ -69,21 +69,37 @@ public class Friendship {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        JFrame board = new JFrame();
+        board.setSize(750, 500);
+        board.setTitle("Displaying graphical output: ");
+        visualizeOutput panel = new visualizeOutput();
 
         System.out.println("Input: ");
         int n = sc.nextInt();
         Friendship g = new Friendship(n + 1);
 
+        int x = 50;
+        int y = 480;
+
         for (int i = 0; i < n; i++) {
 
             int l = sc.nextInt();
             int r = sc.nextInt();
-            g.addEdge(l,r);
-            g.addEdge(r,l);
+            g.addEdge(l, r);
+            g.addEdge(r, l);
 
+            if (i % 2 == 0) {
+                x += 33;
+                y -= 123;
+            } else {
+                x += 199;
+                y -= 77;
+            }
+
+            panel.addVertex(String.valueOf(i + 1), x, y);
+            panel.addEdge(l - 1, r - 1);
         }
 
-    
         List<List<List<Integer>>> list = new ArrayList<List<List<Integer>>>();
         List<List<Integer>> inlist = new ArrayList<List<Integer>>();
 
@@ -104,16 +120,18 @@ public class Friendship {
             }
 
         }
-        
+
         sortList(inlist);
         System.out.println("You can form the following friendship(s): ");
 
-        for(int i=0;i<inlist.size();i++){
-            System.out.print((i + 1)+ ". ");
+        for (int i = 0; i < inlist.size(); i++) {
+            System.out.print((i + 1) + ". ");
             System.out.println(inlist.get(i));
         }
 
+        board.add(panel);
+        board.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        board.setVisible(true);
     }
-
 
 }
