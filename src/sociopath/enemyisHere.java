@@ -1,5 +1,15 @@
-
 package sociopath;
+
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
+
 public class enemyisHere<T> extends Graph {
 
     Vertex<T> head;
@@ -78,10 +88,11 @@ public class enemyisHere<T> extends Graph {
 
     //add EnemyEdge
     public void addEnemyEdge(VertexInfo<T> source, VertexInfo<T> destination) {
-        addUndirectedEnemyEdge(source,destination);
-        addUndirectedEnemyEdge(destination,source);
+        addUndirectedEnemyEdge(source, destination);
+        addUndirectedEnemyEdge(destination, source);
     }
- public boolean addUndirectedEnemyEdge(VertexInfo<T> source, VertexInfo<T> destination) {
+
+    public boolean addUndirectedEnemyEdge(VertexInfo<T> source, VertexInfo<T> destination) {
         if (head == null) {
             return false;
         }
@@ -209,4 +220,3 @@ class frenemy<T> {
         return false;
     }
 }
-
