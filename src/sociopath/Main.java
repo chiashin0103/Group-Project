@@ -435,11 +435,13 @@ public class Main {
 
     public static void areyouFrenemy(Graph<Integer> graph, enemyisHere<Integer> enemy, frenemy<Integer> frenemy, VertexInfo<Integer> bestFriend, VertexInfo<Integer> hate, VertexInfo<Integer> middle) {
         if (enemy.hasEnemyEdge(bestFriend, hate) == true) {
-            if (graph.hasEdge(middle, hate) == true || graph.hasEdge(hate, middle)) {
+            //when your friend is friend with your hater
+            if (graph.hasEdge(middle, hate) == true || graph.hasEdge(hate, middle)==true) {
                 frenemy.addFrenemyVertex(hate);
                 frenemy.addFrenemyVertex(middle);
                 frenemy.addFrenemyEdge(middle, hate);
             } else {
+                //when your friend has no relation with your hater
                 enemy.addEnemyEdge(middle, hate);
             }
         }
