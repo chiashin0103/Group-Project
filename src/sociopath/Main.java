@@ -58,7 +58,7 @@ public class Main {
         graph.addEdge(v10, v4, 7);
         graph.addEdge(v10, v9, 6);
         enemy.addEnemyEdge(v1, v3);
-        enemy.addEnemyEdge(v8, v10);
+        enemy.addEnemyEdge(v2, v10);
 
         String end = "";
 
@@ -411,12 +411,16 @@ public class Main {
                     System.out.println("");
                     System.out.println("-----------Check for Frenemy------------");
                     areyouFrenemy(graph, enemy, frenemy, v1, v3, v2);
-                    areyouFrenemy(graph, enemy, frenemy, v8, v10, v4);
+                    areyouFrenemy(graph, enemy, frenemy, v2, v10, v5);
+                    /*case 1- middle friend is friend with your hater=frenemy*/
                     System.out.println("Vertex 1 and vertex 3 is enemy: " + enemy.hasEnemyEdge(v1, v3));
                     System.out.println("Vertex 2 and vertex 3 is enemy: " + enemy.hasEnemyEdge(v2, v3));
                     System.out.println("Vertex 2-->vertex 3 is frenemy: " + frenemy.hasFrenemyEdge(v2, v3));
                     System.out.println("Vertex 3-->vertex 2 is frenemy: " + frenemy.hasFrenemyEdge(v3, v2));
-                    System.out.println("Vertex 4-->vertex 10 is frenemy: " + frenemy.hasFrenemyEdge(v4, v10));
+                    /*case 2-middle friend have no relation with your hater*/
+                    System.out.println("Vertex 2 and vertex 10 is enemy: " + enemy.hasEnemyEdge(v2, v10));
+                    System.out.println("Vertex 5-->vertex 10 is frenemy: " + frenemy.hasFrenemyEdge(v5, v10));
+                    System.out.println("Vertex 5 and vertex 10 is enemy: " + enemy.hasEnemyEdge(v5, v10));
 
                     System.out.println("Type YES if you want to end the program");
                     end = input.next();
@@ -435,6 +439,8 @@ public class Main {
                 frenemy.addFrenemyVertex(hate);
                 frenemy.addFrenemyVertex(middle);
                 frenemy.addFrenemyEdge(middle, hate);
+            } else {
+                enemy.addEnemyEdge(middle, hate);
             }
         }
     }
