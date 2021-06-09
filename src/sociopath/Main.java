@@ -9,6 +9,8 @@ public class Main {
     public static void main(String[] args) {
 
         Graph<Integer> graph = new Graph<>();
+        enemyisHere<Integer> enemy = new enemyisHere<>();
+        frenemy<Integer> frenemy = new frenemy<>();
 
         //Random insert vertex information (id->10 people, diving rate, lunch start hour, lunch period)
         VertexInfo<Integer> v1 = new VertexInfo(1, 50, 1120, 15);
@@ -26,6 +28,7 @@ public class Main {
 
         for (VertexInfo i : people) {
             graph.addVertex(i);
+            enemy.addEnemyVertex(i);
         }
 
         //initialize relationship(edges) according to Figure 1 with reputation respectively
@@ -46,9 +49,8 @@ public class Main {
         graph.addEdge(v9, v10, 5);
         graph.addEdge(v10, v4, 7);
         graph.addEdge(v10, v9, 6);
-
-       
-
+        enemy.addEnemyEdge(v1, v3);
+        enemy.addEnemyEdge(v8, v10);
 //        //Test for Graph.java
 //        System.out.println("The number of vertices in graph: " + graph.getSize());
 //
@@ -82,186 +84,178 @@ public class Main {
 //        System.out.println("Set Reputation :  ");
 //        System.out.println(graph.setRep(v1, v2, 6));
 //        System.out.println(graph.getRep(v1, v2));
-
         //Event 1
-         String str="";
-         
-         Random rn = new Random();
-         
-         int we =rn.nextInt(10)+1;          //we will become anyone one among 1 to 10 just for testing event 1 
-         // later we can put in the initialazation
-         int teaching = rn.nextInt(10) + 1;//the people we will be teaching in event 1
-         System.out.println("people[we-1]");
-         System.out.println(people[we-1]);
-         
-         ArrayList<Integer> Oureneighbour=graph.getNeighbours(people[we-1]);
-         
-         do{                                // to avoid the number for we and teaching is same and make sure is stranger
-         int newrandom = rn.nextInt(10) + 1;
-         teaching=newrandom;
-         }while (teaching==we||Oureneighbour.contains(teaching));
-         
-         System.out.println("You are "+we );//tell we will represent which number
-         System.out.println("You are teaching "+teaching+" now" );//tell in event 1 we will be teaching who
-         System.out.println("Are you help him/her in the lab question? Answer YES or NO");//are you seccess to help her/him
-         
-         System.out.println(graph.getRep(people[we-1], people[teaching-1]));//testing
-         
-         Scanner input=new Scanner(System.in);
-         String answer=input.nextLine();
-         
-             if(answer.equalsIgnoreCase("Yes")){//if success to help him/her
-                 
-                 {
-                     graph.addEdge(people[we-1],people[teaching-1],10);// no edges so we connect them 
-                 }
-         }
-             else{// answer is no
-                 
-                     graph.addEdge(people[we-1],people[teaching-1],2);//rep will set to 2
-                 System.out.println(graph.getRep(people[we-1], people[teaching-1]));//for checking
-             }
-             //END OF EVENT 1
-             
-             //For event 2
-             
-             System.out.println(graph.getNeighbours(people[teaching-1]));// for checking later will delete
-             
-            
-             ArrayList<Integer> tostoreneighbour=graph.getNeighbours(people[teaching-1]);
-             // put all neighbour into arry list for later use
-             System.out.println("Do you want to tell your friend about him/her?Answer YES or NO)");
-             String answer2=input.nextLine();
-             
-             if(answer2.equalsIgnoreCase("Yes")){
-                 System.out.println("Will it be a good or bad message?Answer good or bad");
-                 String answer3=input.nextLine();
-                 
-             if(answer3.equalsIgnoreCase("good")){   
-             for(int i = 0; i < tostoreneighbour.size();i++) {
-                 System.out.println(tostoreneighbour.get(i));
-                                   
-                    switch (tostoreneighbour.get(i)) {
-                      
-                     case 1:
-                         
-                     chit_chat<Integer> cc1 = new chit_chat<>(graph,people[we-1],people[teaching-1],v1);
-                     str = "Good";
-                     cc1.strangerToFriend(str);
-                      break;
-                     case 2:
-                     chit_chat<Integer> cc2 = new chit_chat<>(graph,people[we-1],people[teaching-1],v2);
-                     str = "Good";
-                     cc2.strangerToFriend(str);
-                       break;
-                     case 3:
-                       chit_chat<Integer> cc3 = new chit_chat<>(graph,people[we-1],people[teaching-1],v3);
-                       str = "Good";
-                     cc3.strangerToFriend(str);
-                       break;
-                     case 4:
-                       chit_chat<Integer> cc4 = new chit_chat<>(graph,people[we-1],people[teaching-1],v4);
-                       str = "Good";
-                     cc4.strangerToFriend(str);
-                       break;
-                    case 5:
-                       chit_chat<Integer> cc5 = new chit_chat<>(graph,people[we-1],people[teaching-1],v5);
-                       str = "Good";
-                     cc5.strangerToFriend(str);
-                     break;
-                     case 6:
-                       chit_chat<Integer> cc6 = new chit_chat<>(graph,people[we-1],people[teaching-1],v6);
-                       str = "Good";
-                     cc6.strangerToFriend(str);
-                      break;
-                   case 7:
-                       chit_chat<Integer> cc7 = new chit_chat<>(graph,people[we-1],people[teaching-1],v7);
-                       str = "Good";
-                     cc7.strangerToFriend(str);
-                       break;
-                     case 8:
-                       chit_chat<Integer> cc8 = new chit_chat<>(graph,people[we-1],people[teaching-1],v8);
-                       str = "Good";
-                     cc8.strangerToFriend(str);
-                       break;
-                     case 9:
-                       chit_chat<Integer> cc9 = new chit_chat<>(graph,people[we-1],people[teaching-1],v9);
-                       str = "Good";
-                     cc9.strangerToFriend(str);
-                       break;
-                     case 10:
-                       chit_chat<Integer> cc10 = new chit_chat<>(graph,people[we-1],people[teaching-1],v10);
-                       str = "Good";
-                     cc10.strangerToFriend(str);
-                       break;
-                   }
-                         }
-             }
-             else{
-                 for(int i = 0; i < tostoreneighbour.size();i++) {
-                 System.out.println(tostoreneighbour.get(i));
-                                   
-                    switch (tostoreneighbour.get(i)) {
-                      
-                     case 1:
-                         
-                     chit_chat<Integer> cc1 = new chit_chat<>(graph,people[we-1],people[teaching-1],v1);
-                     str = "Bad";
-                     cc1.strangerToFriend(str);
-                      break;
-                     case 2:
-                     chit_chat<Integer> cc2 = new chit_chat<>(graph,people[we-1],people[teaching-1],v2);
-                     str = "bad";
-                     cc2.strangerToFriend(str);
-                       break;
-                     case 3:
-                       chit_chat<Integer> cc3 = new chit_chat<>(graph,people[we-1],people[teaching-1],v3);
-                       str = "bad";
-                     cc3.strangerToFriend(str);
-                       break;
-                     case 4:
-                       chit_chat<Integer> cc4 = new chit_chat<>(graph,people[we-1],people[teaching-1],v4);
-                       str = "bad";
-                     cc4.strangerToFriend(str);
-                       break;
-                    case 5:
-                       chit_chat<Integer> cc5 = new chit_chat<>(graph,people[we-1],people[teaching-1],v5);
-                       str = "bad";
-                     cc5.strangerToFriend(str);
-                     break;
-                     case 6:
-                       chit_chat<Integer> cc6 = new chit_chat<>(graph,people[we-1],people[teaching-1],v6);
-                       str = "bad";
-                     cc6.strangerToFriend(str);
-                      break;
-                   case 7:
-                       chit_chat<Integer> cc7 = new chit_chat<>(graph,people[we-1],people[teaching-1],v7);
-                       str = "bad";
-                     cc7.strangerToFriend(str);
-                       break;
-                     case 8:
-                       chit_chat<Integer> cc8 = new chit_chat<>(graph,people[we-1],people[teaching-1],v8);
-                       str = "bad";
-                     cc8.strangerToFriend(str);
-                       break;
-                     case 9:
-                       chit_chat<Integer> cc9 = new chit_chat<>(graph,people[we-1],people[teaching-1],v9);
-                       str = "bad";
-                     cc9.strangerToFriend(str);
-                       break;
-                     case 10:
-                       chit_chat<Integer> cc10 = new chit_chat<>(graph,people[we-1],people[teaching-1],v10);
-                       str = "bad";
-                     cc10.strangerToFriend(str);
-                       break;
-                   }
-                         }
-             }
-             }
-             //End of Event 2
+        String str = "";
 
+        Random rn = new Random();
 
-    
+        int we = rn.nextInt(10) + 1;          //we will become anyone one among 1 to 10 just for testing event 1 
+        // later we can put in the initialazation
+        int teaching = rn.nextInt(10) + 1;//the people we will be teaching in event 1
+        System.out.println("people[we-1]");
+        System.out.println(people[we - 1]);
+
+        ArrayList<Integer> Oureneighbour = graph.getNeighbours(people[we - 1]);
+
+        do {                                // to avoid the number for we and teaching is same and make sure is stranger
+            int newrandom = rn.nextInt(10) + 1;
+            teaching = newrandom;
+        } while (teaching == we || Oureneighbour.contains(teaching));
+
+        System.out.println("You are " + we);//tell we will represent which number
+        System.out.println("You are teaching " + teaching + " now");//tell in event 1 we will be teaching who
+        System.out.println("Are you help him/her in the lab question? Answer YES or NO");//are you seccess to help her/him
+
+        System.out.println(graph.getRep(people[we - 1], people[teaching - 1]));//testing
+
+        Scanner input = new Scanner(System.in);
+        String answer = input.nextLine();
+
+        if (answer.equalsIgnoreCase("Yes")) {//if success to help him/her
+
+            {
+                graph.addEdge(people[we - 1], people[teaching - 1], 10);// no edges so we connect them 
+            }
+        } else {// answer is no
+
+            graph.addEdge(people[we - 1], people[teaching - 1], 2);//rep will set to 2
+            System.out.println(graph.getRep(people[we - 1], people[teaching - 1]));//for checking
+        }
+        //END OF EVENT 1
+
+        //For event 2
+        System.out.println(graph.getNeighbours(people[teaching - 1]));// for checking later will delete
+
+        ArrayList<Integer> tostoreneighbour = graph.getNeighbours(people[teaching - 1]);
+        // put all neighbour into arry list for later use
+        System.out.println("Do you want to tell your friend about him/her?Answer YES or NO)");
+        String answer2 = input.nextLine();
+
+        if (answer2.equalsIgnoreCase("Yes")) {
+            System.out.println("Will it be a good or bad message?Answer good or bad");
+            String answer3 = input.nextLine();
+
+            if (answer3.equalsIgnoreCase("good")) {
+                for (int i = 0; i < tostoreneighbour.size(); i++) {
+                    System.out.println(tostoreneighbour.get(i));
+
+                    switch (tostoreneighbour.get(i)) {
+
+                        case 1:
+
+                            chit_chat<Integer> cc1 = new chit_chat<>(graph, people[we - 1], people[teaching - 1], v1);
+                            str = "Good";
+                            cc1.strangerToFriend(str);
+                            break;
+                        case 2:
+                            chit_chat<Integer> cc2 = new chit_chat<>(graph, people[we - 1], people[teaching - 1], v2);
+                            str = "Good";
+                            cc2.strangerToFriend(str);
+                            break;
+                        case 3:
+                            chit_chat<Integer> cc3 = new chit_chat<>(graph, people[we - 1], people[teaching - 1], v3);
+                            str = "Good";
+                            cc3.strangerToFriend(str);
+                            break;
+                        case 4:
+                            chit_chat<Integer> cc4 = new chit_chat<>(graph, people[we - 1], people[teaching - 1], v4);
+                            str = "Good";
+                            cc4.strangerToFriend(str);
+                            break;
+                        case 5:
+                            chit_chat<Integer> cc5 = new chit_chat<>(graph, people[we - 1], people[teaching - 1], v5);
+                            str = "Good";
+                            cc5.strangerToFriend(str);
+                            break;
+                        case 6:
+                            chit_chat<Integer> cc6 = new chit_chat<>(graph, people[we - 1], people[teaching - 1], v6);
+                            str = "Good";
+                            cc6.strangerToFriend(str);
+                            break;
+                        case 7:
+                            chit_chat<Integer> cc7 = new chit_chat<>(graph, people[we - 1], people[teaching - 1], v7);
+                            str = "Good";
+                            cc7.strangerToFriend(str);
+                            break;
+                        case 8:
+                            chit_chat<Integer> cc8 = new chit_chat<>(graph, people[we - 1], people[teaching - 1], v8);
+                            str = "Good";
+                            cc8.strangerToFriend(str);
+                            break;
+                        case 9:
+                            chit_chat<Integer> cc9 = new chit_chat<>(graph, people[we - 1], people[teaching - 1], v9);
+                            str = "Good";
+                            cc9.strangerToFriend(str);
+                            break;
+                        case 10:
+                            chit_chat<Integer> cc10 = new chit_chat<>(graph, people[we - 1], people[teaching - 1], v10);
+                            str = "Good";
+                            cc10.strangerToFriend(str);
+                            break;
+                    }
+                }
+            } else {
+                for (int i = 0; i < tostoreneighbour.size(); i++) {
+                    System.out.println(tostoreneighbour.get(i));
+
+                    switch (tostoreneighbour.get(i)) {
+
+                        case 1:
+
+                            chit_chat<Integer> cc1 = new chit_chat<>(graph, people[we - 1], people[teaching - 1], v1);
+                            str = "Bad";
+                            cc1.strangerToFriend(str);
+                            break;
+                        case 2:
+                            chit_chat<Integer> cc2 = new chit_chat<>(graph, people[we - 1], people[teaching - 1], v2);
+                            str = "bad";
+                            cc2.strangerToFriend(str);
+                            break;
+                        case 3:
+                            chit_chat<Integer> cc3 = new chit_chat<>(graph, people[we - 1], people[teaching - 1], v3);
+                            str = "bad";
+                            cc3.strangerToFriend(str);
+                            break;
+                        case 4:
+                            chit_chat<Integer> cc4 = new chit_chat<>(graph, people[we - 1], people[teaching - 1], v4);
+                            str = "bad";
+                            cc4.strangerToFriend(str);
+                            break;
+                        case 5:
+                            chit_chat<Integer> cc5 = new chit_chat<>(graph, people[we - 1], people[teaching - 1], v5);
+                            str = "bad";
+                            cc5.strangerToFriend(str);
+                            break;
+                        case 6:
+                            chit_chat<Integer> cc6 = new chit_chat<>(graph, people[we - 1], people[teaching - 1], v6);
+                            str = "bad";
+                            cc6.strangerToFriend(str);
+                            break;
+                        case 7:
+                            chit_chat<Integer> cc7 = new chit_chat<>(graph, people[we - 1], people[teaching - 1], v7);
+                            str = "bad";
+                            cc7.strangerToFriend(str);
+                            break;
+                        case 8:
+                            chit_chat<Integer> cc8 = new chit_chat<>(graph, people[we - 1], people[teaching - 1], v8);
+                            str = "bad";
+                            cc8.strangerToFriend(str);
+                            break;
+                        case 9:
+                            chit_chat<Integer> cc9 = new chit_chat<>(graph, people[we - 1], people[teaching - 1], v9);
+                            str = "bad";
+                            cc9.strangerToFriend(str);
+                            break;
+                        case 10:
+                            chit_chat<Integer> cc10 = new chit_chat<>(graph, people[we - 1], people[teaching - 1], v10);
+                            str = "bad";
+                            cc10.strangerToFriend(str);
+                            break;
+                    }
+                }
+            }
+        }
+        //End of Event 2
 
 //        //Test for Event 2 - Chit-chat
 //        System.out.println("-----------------------");
@@ -271,14 +265,32 @@ public class Main {
 //        cc1.strangerToFriend(str);
 //        System.out.println(graph.getRep(v1, v5));
 //        System.out.println(graph.getRep(v5, v1));
-    
+        //checking for event 3
+        System.out.println("Maximum reputation that can be obtain is " + graph.getMaxRep(v9));
 
-	//checking for event 3
-	System.out.println("Maximum reputation that can be obtain is " + graph.getMaxRep(v9));
-        
         graph.canPreventRumour(v2, v7);
 //        graph.canPreventRumour(v2, v9);
-        
-        
+
+        /*Extra feature 2. Testing program*/
+        System.out.println("");
+        System.out.println("-----------Check for Frenemy------------");
+        areyouFrenemy(graph, enemy, frenemy, v1, v3, v2);
+        areyouFrenemy(graph, enemy, frenemy, v8, v10, v4);
+        System.out.println("Vertex 1 and vertex 3 is enemy: "+enemy.hasEnemyEdge(v1, v3));
+        System.out.println("Vertex 2 and vertex 3 is enemy: "+enemy.hasEnemyEdge(v2, v3));
+        System.out.println("Vertex 2-->vertex 3 is frenemy: "+frenemy.hasFrenemyEdge(v2, v3));
+        System.out.println("Vertex 3-->vertex 2 is frenemy: "+frenemy.hasFrenemyEdge(v3, v2));
+        System.out.println("Vertex 4-->vertex 10 is frenemy: "+frenemy.hasFrenemyEdge(v4, v10));
     }
+
+    public static void areyouFrenemy(Graph<Integer> graph, enemyisHere<Integer> enemy, frenemy<Integer> frenemy, VertexInfo<Integer> bestFriend, VertexInfo<Integer> hate, VertexInfo<Integer> middle) {
+        if (enemy.hasEnemyEdge(bestFriend, hate) == true) {
+            if (graph.hasEdge(middle, hate) == true || graph.hasEdge(hate, middle)) {
+                frenemy.addFrenemyVertex(hate);
+                frenemy.addFrenemyVertex(middle);
+                frenemy.addFrenemyEdge(middle, hate);
+            }
+        }
+    }
+
 }
