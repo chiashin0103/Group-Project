@@ -36,6 +36,7 @@ public class Main {
 
         for (VertexInfo i : people) {
             graph.addVertex(i);
+            enemy.addEnemyVertex(i);
         }
 
         //initialize relationship(edges) according to Figure 1 with reputation respectively
@@ -56,6 +57,8 @@ public class Main {
         graph.addEdge(v9, v10, 5);
         graph.addEdge(v10, v4, 7);
         graph.addEdge(v10, v9, 6);
+        enemy.addEnemyEdge(v1, v3);
+        enemy.addEnemyEdge(v8, v10);
 
         String end = "";
 
@@ -423,6 +426,7 @@ public class Main {
             }
 
         }
+
     }
 
     public static void areyouFrenemy(Graph<Integer> graph, enemyisHere<Integer> enemy, frenemy<Integer> frenemy, VertexInfo<Integer> bestFriend, VertexInfo<Integer> hate, VertexInfo<Integer> middle) {
