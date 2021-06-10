@@ -18,6 +18,7 @@ public class Main {
         Graph<Integer> graph = new Graph<>();
         enemyisHere<Integer> enemy = new enemyisHere<>();
         frenemy<Integer> frenemy = new frenemy<>();
+        String banner = "********************************************************************************************************";
 
         Scanner input = new Scanner(System.in);
         //Random insert vertex information (id->10 people, diving rate, lunch start hour, lunch period)
@@ -31,6 +32,7 @@ public class Main {
         VertexInfo<Integer> v8 = new VertexInfo(8, 80, 1145, 25);
         VertexInfo<Integer> v9 = new VertexInfo(9, 55, 1233, 28);
         VertexInfo<Integer> v10 = new VertexInfo(10, 35, 1125, 35);
+     
 
         VertexInfo[] people = {v1, v2, v3, v4, v5, v6, v7, v8, v9, v10};
 
@@ -38,7 +40,6 @@ public class Main {
             graph.addVertex(i);
             enemy.addEnemyVertex(i);
         }
-
         //initialize relationship(edges) according to Figure 1 with reputation respectively
         System.out.println("Adding edges...");
         graph.addEdge(v1, v7, 4);
@@ -81,64 +82,68 @@ public class Main {
             switch (event) {
 
                 case 1: {
+                    System.out.println(banner);
                     //Event 1
-                    System.out.println("Enter Your vertex Number For Event 1");
+                    System.out.print("Enter your id: ");
                     int we = input.nextInt();
-                    System.out.println("Enter who u are teaching");
-                    ArrayList<Integer> Oureneighbour = graph.getNeighbours(people[we - 1]);
+                    System.out.print("Enter stranger's id who seek for your help: ");
                     int teaching = input.nextInt();
+                    ArrayList<Integer> Oureneighbour = graph.getNeighbours(people[we - 1]);
+                    
 
                     while (teaching == we || Oureneighbour.contains(teaching)) {
-                        System.out.println("Please enter a valid input");
+                        System.out.print("He is not a stranger! Please enter a valid input:");
                         teaching = input.nextInt();
                     }
 
-                    System.out.println("You are " + we);//tell we will represent which number
+                    System.out.println("You are " + we + ",");//tell we will represent which number
                     System.out.println("You are teaching " + teaching + " now");//tell in event 1 we will be teaching who
-                    System.out.println("Are you help him/her in the lab question? Answer YES or NO");//are you seccess to help her/him
+                    System.out.print("Are you good at programming? Answer YES or NO: ");//are you success to help her/him
                     String answer = input.next();
 
                     if (answer.equalsIgnoreCase("Yes")) {//if success to help him/her
 
                         {
-                            graph.addEdge(people[we - 1], people[teaching - 1], 10);// no edges so we connect them 
-                            System.out.println("You and " + teaching + " are friend now with rep point " + graph.getRep(people[we - 1], people[teaching - 1]));
+                            graph.addEdge( people[teaching - 1],people[we - 1],10);// no edges so we connect them 
+                            System.out.println("You and " + teaching + " are new friend with rep point " + graph.getRep(people[teaching - 1],people[we - 1]));
 
                         }
                     } else {// answer is no
 
-                        graph.addEdge(people[we - 1], people[teaching - 1], 2);//rep will set to 2
-                        System.out.println("You and " + teaching + " are friend now with rep point " + graph.getRep(people[we - 1], people[teaching - 1]));
+                        graph.addEdge(people[teaching - 1],people[we - 1],2);//rep will set to 2
+                        System.out.println("You and " + teaching + " are friend now with rep point " + graph.getRep(people[teaching - 1],people[we - 1]));
 
                     }
-                    System.out.println("Type YES if you want to end the program");
+                    System.out.println(banner);
+                    System.out.println("Press any key to continue. Type YES if you want to end the program");
                     end = input.next();
                     break;
                     //END OF EVENT 1
                 }
                 case 2: {
+                    System.out.println(banner);
                     //EVENT 2
                     String str = "";
-                    System.out.println("Enter Your vertex Number For Event 2");
+                    System.out.print("Enter your id: ");
                     int we = input.nextInt();
                     ArrayList<Integer> OureneighbourEvent2 = graph.getNeighbours(people[we - 1]);
                     
-                    System.out.println("Enter who u are your new friend");
-                    
+                    System.out.print("Enter your new friend's id: ");
                     int friend = input.nextInt();
 
-                    while (friend == we){//)  {
-                        System.out.println("Please enter a valid input");
+                    while (friend == we){
+                        System.out.print("Please enter a valid input: ");
                         friend = input.nextInt();
                     }
-
-                    ArrayList<Integer> tostoreneighbour = graph.getNeighbours(people[friend - 1]);
+                     
                     // put all neighbour into arry list for later use
-                    System.out.println("Do you want to tell your friend about him/her?Answer YES or NO)");
+                    ArrayList<Integer> tostoreneighbour = graph.getNeighbours(people[friend - 1]);
+                   
+                    System.out.print("Did your new friend have a chit-chat with his/her friends? Answer YES or NO: ");
                     String answer2 = input.next();
 
                     if (answer2.equalsIgnoreCase("Yes")) {
-                        System.out.println("Will it be a good or bad message?Answer good or bad");
+                        System.out.print("Will it be a good or bad message? Answer good or bad: ");
                         String answer3 = input.next();
 
                         if (answer3.equalsIgnoreCase("good")) {
@@ -146,6 +151,9 @@ public class Main {
                                 //System.out.println(tostoreneighbour.get(i)); for checking who are new friend
                                 if(tostoreneighbour.get(i)==we)
                                 continue;
+//                                chit_chat<Integer> cc1 = new chit_chat<>(graph, people[we - 1], people[friend - 1], people[tostoreneighbour.get(i)-1]);
+//                                str = "Good";
+//                                cc1.strangerToFriend(str);
                                 switch (tostoreneighbour.get(i)) {
 
                                     case 1:
@@ -208,7 +216,6 @@ public class Main {
                                 switch (tostoreneighbour.get(i)) {
 
                                     case 1:
-
                                         chit_chat<Integer> cc1 = new chit_chat<>(graph, people[we - 1], people[friend - 1], v1);
                                         str = "Bad";
                                         cc1.strangerToFriend(str);
@@ -264,9 +271,9 @@ public class Main {
                         for (int i = 0; i < tostoreneighbour.size(); i++) {
                                 //System.out.println(tostoreneighbour.get(i)); for checking who are new friend
                                 if(tostoreneighbour.get(i)==we)
-                                continue;
+                                    continue;
 				if(OureneighbourEvent2.contains(tostoreneighbour.get(i)))
-                                continue;
+                                    continue;
                                 switch (tostoreneighbour.get(i)) {
 
                                     case 1:
@@ -306,23 +313,31 @@ public class Main {
                     
                     
                     graph.printEdges();
+                    System.out.println(banner);
+                    System.out.println("Press any key to continue. Type YES if you want to end the program");
                     end = input.next();
                     break;
                 }
 
-                //Event 3
+                
                 case 3: {
+                    System.out.println(banner);
+                    //Event 3
                     System.out.print("Enter your lunch time today (eg. 1105): ");
                     int lunchtime = input.nextInt();
                     System.out.print("Enter how long do you want to have lunch today (5 to 60 minutes): ");
                     int lunchperiod = input.nextInt();
                     graph.eatLunchwMaxRep(lunchtime,lunchperiod);
-                    System.out.println("Type YES if you want to end the program");
+                    
+                    System.out.println(banner);
+                    System.out.println("Press any key to continue. Type YES if you want to end the program");
                     end=input.next();
                     break;
                 }
-                //Event 4
+                
                 case 4: {
+                    System.out.println(banner);
+                    //Event 4
                     Scanner s = new Scanner(System.in);
                     Stack<Integer> stack = new Stack<Integer>();
 
@@ -362,14 +377,18 @@ public class Main {
 
                     //Print output
                     System.out.println("The number of round(s): " + count);
-                    System.out.println("Type YES if you want to end the program");
-                    end = input.next();
+                    
+                    System.out.println(banner);
+                    System.out.println("Press any key to continue. Type YES if you want to end the program");
+                    end=input.next();
                     break;
 
                 }
 
-                //Event 5
+                
                 case 5: {
+                    System.out.println(banner);
+                    //Event 5
                     System.out.println("Enter Where the rumors Start");
                     int rumors = input.nextInt();
                     ArrayList<Integer> Oureneighbour = graph.getNeighbours(people[rumors - 1]);
@@ -382,12 +401,16 @@ public class Main {
                     }
                     graph.canPreventRumour(people[rumors - 1], people[crush - 1]);
                     System.out.println("");
-                    System.out.println("Type YES if you want to end the program");
-                    end = input.next();
+                    
+                    System.out.println(banner);
+                    System.out.println("Press any key to continue. Type YES if you want to end the program");
+                    end=input.next();
                     break;
                 }
-                //Event 6
+                
                 case 6: {
+                    System.out.println(banner);
+                    //Event 6
                     Scanner sc = new Scanner(System.in);
                     JFrame board = new JFrame();
                     board.setSize(750, 500);
@@ -452,8 +475,10 @@ public class Main {
                     board.add(panel);
                     board.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     board.setVisible(true);
-                    System.out.println("Type YES if you want to end the program");
-                    end = input.next();
+                    
+                    System.out.println(banner);
+                    System.out.println("Press any key to continue. Type YES if you want to end the program");
+                    end=input.next();
                     break;
                 }
                 /*Extra feature 2. Testing program*/
@@ -472,8 +497,9 @@ public class Main {
                     System.out.println("Vertex 5-->vertex 10 is frenemy: " + frenemy.hasFrenemyEdge(v5, v10));
                     System.out.println("Vertex 5 and vertex 10 is enemy: " + enemy.hasEnemyEdge(v5, v10));
 
-                    System.out.println("Type YES if you want to end the program");
-                    end = input.next();
+                    System.out.println(banner);
+                    System.out.println("Press any key to continue. Type YES if you want to end the program");
+                    end=input.next();
                     break;
                 }
 
@@ -496,5 +522,7 @@ public class Main {
             }
         }
     }
+    
+   
 
 }
