@@ -552,11 +552,11 @@ public class Graph<T> {
             System.out.println("Congrats! You can gain maximum of " + AvailableFriends + " rep points\nThe table will move as follows");
 
             System.out.println("--------------TABLE--------------");
-                       for(int i=0;i<AvailableFriends;i++){
-            for(int a:canHaveLunch[i])
-                System.out.print(a + " ");
+            for(int i=0;i<AvailableFriends;i++){
+                for(int a:canHaveLunch[i])
+                    System.out.print(a + " ");
             System.out.println("");
-        }
+            }
    
             return AvailableFriends;
         }
@@ -578,16 +578,13 @@ public class Graph<T> {
         for(int i=0;i<AvailableFriends-2;i++){
             System.out.println("--------------TABLE--------------");
             for(int j=i;j<i+3;j++){
-                for(int a:canHaveLunch[j])
-                System.out.print(a + " ");
-            System.out.println("");
-                
+                System.out.println(canHaveLunch[j][0] + " from " + canHaveLunch[j][1] + " to " + canHaveLunch[j][2]);
             }
             System.out.println("---------------------------------");
             
             if(i!=AvailableFriends-3){
-                System.out.println(canHaveLunch[i][0] + " finished lunch and left the table");
-                System.out.println(canHaveLunch[i+3][0] + " joined the table");
+                System.out.println("On " + canHaveLunch[i][2] + ",  "+canHaveLunch[i][0] + " finished lunch and left the table");
+                System.out.println("On " + canHaveLunch[i+3][1] + ",  "+canHaveLunch[i+3][0] + " joined the table");
             }
                 
         }
