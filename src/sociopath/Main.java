@@ -265,6 +265,8 @@ public class Main {
                                 //System.out.println(tostoreneighbour.get(i)); for checking who are new friend
                                 if(tostoreneighbour.get(i)==we)
                                 continue;
+				if(OureneighbourEvent2.contains(tostoreneighbour.get(i)))
+                                continue;
                                 switch (tostoreneighbour.get(i)) {
 
                                     case 1:
