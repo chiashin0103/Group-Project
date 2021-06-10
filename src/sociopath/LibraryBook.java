@@ -21,7 +21,7 @@ public class LibraryBook {
         for (int i = 0; i < sort.length; i++) {
             sort[i] = s.nextInt();
         }
-        
+
         do {
             findRemove(sort);
             stack.addAll(findRemove(sort));
@@ -44,25 +44,32 @@ public class LibraryBook {
     public static Stack<Integer> findRemove(int sort[]) {
         Stack<Integer> stack = new Stack<>();
         Stack<Integer> stack2 = new Stack<>();
-        Stack<Integer> stack3 = new Stack<>();
-        int[] helperarr = new int[sort.length];
-
+        Integer a;
+        
         for (int i = sort.length - 1; i >= 0; i--) {
-            if (!stack.isEmpty()) {
-                while (!stack.isEmpty() && stack.peek() <= sort[i]) {
-                    stack.pop();
-                }
-            }
-            helperarr[i] = stack.empty() ? 0 : stack.peek();
-            stack2.push(sort[i]);
             stack.push(sort[i]);
-            stack2.removeElement(helperarr[i]);
-        }
-        while (!stack2.isEmpty()) {
-            stack3.push(stack2.pop());
         }
 
-        return stack3;
+        a = stack.pop();
+        while (!stack.isEmpty()) {
+            if (stack.peek() > a) {
+                stack.pop();
+                if (stack.isEmpty() == true) {
+                    stack2.push(a);
+                } else {
+                    a = stack.pop();
+                }
+            } else if (stack.peek() == a) {
+                stack.pop();
+                stack2.push(a);
+            } else {
+                stack2.push(a);
+                a = stack.pop();
+                stack2.push(a);
+            }
+        }
+
+        return stack2;
     }
 
     static boolean checkIncreasingSubsequent(int[] checking) {
