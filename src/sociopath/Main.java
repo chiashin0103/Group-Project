@@ -312,11 +312,13 @@ public class Main {
 
                 //Event 3
                 case 3: {
-                    System.out.println("Enter Your vertex Number");
-                    int we = input.nextInt();
-                    System.out.println("Maximum reputation that can be obtain is " + graph.getMaxRep(v9));
+                    System.out.print("Enter your lunch time today (eg. 1105): ");
+                    int lunchtime = input.nextInt();
+                    System.out.print("Enter how long do you want to have lunch today (5 to 60 minutes): ");
+                    int lunchperiod = input.nextInt();
+                    graph.eatLunchwMaxRep(lunchtime,lunchperiod);
                     System.out.println("Type YES if you want to end the program");
-                    end = input.next();
+                    end=input.next();
                     break;
                 }
                 //Event 4

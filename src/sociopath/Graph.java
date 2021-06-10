@@ -271,10 +271,14 @@ public class Graph<T> {
    //change input to lunch time?
    //use average? - use stack or linkedlist
     
-    public int getMaxRep(VertexInfo<T> v){
-        //get lunch interval of v
-        int startingTime = v.lunchStart;
-        int endingTime = v.lunchStart + v.lunchPeriod;
+    public int eatLunchwMaxRep(int lunchstart, int lunchperiod){
+        //get lunch interval of user
+        int startingTime = lunchstart;
+        int endingTime = lunchstart+lunchperiod;
+        if(lunchperiod<=5||lunchperiod>=60){
+            System.out.println("You lunch period is not healthy!!\nPlease make your lunch period longer than 5 minutes and shorter than 60 minutes!");
+            return 0;
+        }
         String temp = String.valueOf(endingTime);
         if(temp.charAt(2)>='6')
             endingTime+=40;
@@ -287,8 +291,6 @@ public class Graph<T> {
         int AvailableFriends = 0;                   //number of friends    
         int exceed = 0;
         for(int i=0;i<friendsLunchTime.length;i++){
-            if(startingTime==friendsLunchTime[i][1]&&endingTime==friendsLunchTime[i][2])
-                continue;
             if(friendsLunchTime[i][1]<endingTime&&friendsLunchTime[i][2]>startingTime){ //must start before you end or end after you start
                 canHaveLunch[AvailableFriends] = friendsLunchTime[i];
                 if(friendsLunchTime[i][1]<startingTime)
@@ -310,7 +312,6 @@ public class Graph<T> {
             return 1;
         }
                       
-
         //sort friends' lunch period increasingly according to their lunch end time
         for(int i=0;i<AvailableFriends;i++){
             for(int j=0;j<AvailableFriends-1-i;j++){
@@ -330,31 +331,34 @@ public class Graph<T> {
             }
             
         }
-        
 
-        
-        //To get suitable time for each friends
-        System.out.println("Suggested time");
-          
-        
+
+
+
+
+
         //printing
-        int righttime = 0;        
+        int righttime = 0; 
+        String print = "";
         for(int i=0;i<AvailableFriends;i++){
             if(i==0){
-                System.out.println("Have Lunch with "+canHaveLunch[i][0]+" from "+canHaveLunch[i][1]+" to "+canHaveLunch[i][2]);
-                
+                print+="Have Lunch with "+canHaveLunch[i][0]+" from "+canHaveLunch[i][1]+" to "+canHaveLunch[i][2];
+
             }else{
                 if(canHaveLunch[i][2]==canHaveLunch[i-1][2])
                     continue;
                 else if(canHaveLunch[i][1]>canHaveLunch[i-1][2])
-                    System.out.println("Have Lunch with "+canHaveLunch[i][0]+" from "+canHaveLunch[i][1]+" to "+canHaveLunch[i][2]);
+                    print+="\nHave Lunch with "+canHaveLunch[i][0]+" from "+canHaveLunch[i][1]+" to "+canHaveLunch[i][2];
                 else
-                    System.out.println("Have Lunch with "+canHaveLunch[i][0]+" from "+(canHaveLunch[i-1][2]+1)+" to "+canHaveLunch[i][2]);
+                    print+="\nHave Lunch with "+canHaveLunch[i][0]+" from "+(canHaveLunch[i-1][2]+1)+" to "+canHaveLunch[i][2];
             }
-            
+
             righttime++;   
 
         }
+
+        System.out.println("Congrats! You can gain maximum of " + righttime + " rep points by having lunch following the suggested time:");
+        System.out.println(print + "\n");
         return righttime;
     }
     
