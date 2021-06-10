@@ -38,7 +38,7 @@ public class chit_chat<T> {
     public void strangerToFriend(String str){
         int repGain;
 
-        if(graph.hasEdge(source,receiver)==true && graph.hasEdge(receiver,source)==true){
+        if(graph.hasEdge(source,receiver)==true || graph.hasEdge(receiver,source)==true){
             System.out.println("They already knew each other!");
         }else if(graph.hasEdge(spreader,receiver)==true && graph.hasEdge(receiver, spreader)==true){
             if(!str.isEmpty() && str.equals("Good")){
