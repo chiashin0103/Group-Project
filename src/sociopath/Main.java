@@ -62,6 +62,7 @@ public class Main {
 
         String end = "";
 
+        
         while (!"Yes".equalsIgnoreCase(end)) {
             boolean isok = false;
             int event = 1;
@@ -120,10 +121,13 @@ public class Main {
                     String str = "";
                     System.out.println("Enter Your vertex Number For Event 2");
                     int we = input.nextInt();
+                    ArrayList<Integer> OureneighbourEvent2 = graph.getNeighbours(people[we - 1]);
+                    
                     System.out.println("Enter who u are your new friend");
+                    
                     int friend = input.nextInt();
 
-                    while (friend == we) {
+                    while (friend == we){//)  {
                         System.out.println("Please enter a valid input");
                         friend = input.nextInt();
                     }
@@ -140,7 +144,8 @@ public class Main {
                         if (answer3.equalsIgnoreCase("good")) {
                             for (int i = 0; i < tostoreneighbour.size(); i++) {
                                 //System.out.println(tostoreneighbour.get(i)); for checking who are new friend
-
+                                if(tostoreneighbour.get(i)==we)
+                                continue;
                                 switch (tostoreneighbour.get(i)) {
 
                                     case 1:
@@ -198,8 +203,8 @@ public class Main {
                             }
                         } else {
                             for (int i = 0; i < tostoreneighbour.size(); i++) {
-                                System.out.println(tostoreneighbour.get(i));
-
+                                //System.out.println(tostoreneighbour.get(i));
+                                
                                 switch (tostoreneighbour.get(i)) {
 
                                     case 1:
@@ -256,8 +261,49 @@ public class Main {
                                 }
                             }
                         }
+                        for (int i = 0; i < tostoreneighbour.size(); i++) {
+                                //System.out.println(tostoreneighbour.get(i)); for checking who are new friend
+                                if(tostoreneighbour.get(i)==we)
+                                continue;
+                                switch (tostoreneighbour.get(i)) {
+
+                                    case 1:
+
+                                        System.out.println("You have rep point of " + graph.getRep(v1,people[we - 1] )+" relative to "+tostoreneighbour.get(i));
+                                        break;
+                                    case 2:
+                                        System.out.println("You have rep point of " + graph.getRep(v2,people[we - 1] )+" relative to "+tostoreneighbour.get(i));                                        
+                                        break;
+                                    case 3:
+                                        System.out.println("You have rep point of " + graph.getRep(v3,people[we - 1] )+" relative to "+tostoreneighbour.get(i));                                       
+                                        break;
+                                    case 4:
+                                        System.out.println("You have rep point of " + graph.getRep(v4,people[we - 1] )+" relative to "+tostoreneighbour.get(i));                                       
+                                        break;
+                                    case 5:
+                                        System.out.println("You have rep point of " + graph.getRep(v5,people[we - 1] )+" relative to "+tostoreneighbour.get(i));                                       
+                                        break;
+                                    case 6:
+                                        System.out.println("You have rep point of " + graph.getRep(v6,people[we - 1] )+" relative to "+tostoreneighbour.get(i));                                       
+                                        break;
+                                    case 7:
+                                        System.out.println("You have rep point of " + graph.getRep(v7,people[we - 1] )+"relative to "+tostoreneighbour.get(i));                                       
+                                        break;
+                                    case 8:
+                                        System.out.println("You have rep point of " + graph.getRep(v8,people[we - 1] )+" relative to "+tostoreneighbour.get(i));                                       
+                                        break;
+                                    case 9:
+                                        System.out.println("You have rep point of " + graph.getRep(v9,people[we - 1] )+" relative to "+tostoreneighbour.get(i));                                       
+                                        break;
+                                    case 10:
+                                        System.out.println("You have rep point of " + graph.getRep(v10,people[we - 1] )+" relative to "+tostoreneighbour.get(i));                                       
+                                        break;
+                                }
+                            }
                     }
-                    System.out.println("Type YES if you want to end the program");
+                    
+                    
+                    graph.printEdges();
                     end = input.next();
                     break;
                 }
