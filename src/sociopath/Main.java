@@ -502,6 +502,23 @@ public class Main {
                     end=input.next();
                     break;
                 }
+                
+                //extra feature 
+                case 8: {
+                    System.out.println(banner);
+                    //Extra feature (upgraded event 3)
+                    System.out.println("Your account is upgraded! Now you can have lunch with 3 people at the same time");
+                    System.out.print("Enter your lunch time today (eg. 1105): ");
+                    int lunchtime = input.nextInt();
+                    System.out.print("Enter how long do you want to have lunch today (5 to 60 minutes): ");
+                    int lunchperiod = input.nextInt();
+                    graph.UpgradedEatLunchwMaxRep(lunchtime,lunchperiod);
+                    
+                    System.out.println(banner);
+                    System.out.println("Press any key to continue. Type YES if you want to end the program");
+                    end=input.next();
+                    break;
+                }
 
             }
 
