@@ -3,11 +3,10 @@ package sociopath;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Queue;
+import java.util.Scanner;
 import java.util.Set;
 
 public class Graph<T> {
@@ -192,7 +191,7 @@ public class Graph<T> {
        return list;
    }
    
-   //set reputation, assume edge already built between source and destination
+   //set reputation
    public boolean setRep(VertexInfo<T> source, VertexInfo<T> destination, int newR){
        if(head==null){
            return false;
@@ -201,7 +200,8 @@ public class Graph<T> {
            return false;
        }
        if(!hasEdge(source, destination)){
-           return false;
+           addEdge(source, destination, newR);
+           return true;
        }
        Vertex<T> sourceVertex = head;
        while(sourceVertex!=null){
@@ -264,33 +264,31 @@ public class Graph<T> {
    }
    
    
-       /*Event 3 - find the maximum reputation that can obtain by having lunch with friends.(1 person = 1 rep)
+    /*Event 3 - find the maximum reputation that can obtain by having lunch with friends.(1 person = 1 rep)
     -Method : find maximum number of friends that can have lunch with within your lunch period        
     
     */
-   //change input to lunch time?
-   //use average? - use stack or linkedlist
+   
     
-    public int eatLunchwMaxRep(int lunchstart, int lunchperiod){
+    public int eatLunchwMaxRep(int lunchstart,int lunchperiod,VertexInfo<T> user,int divingrate){
+        System.out.println("");
         //get lunch interval of user
         int startingTime = lunchstart;
         int endingTime = lunchstart+lunchperiod;
-        if(lunchperiod<=5||lunchperiod>=60){
-            System.out.println("You lunch period is not healthy!!\nPlease make your lunch period longer than 5 minutes and shorter than 60 minutes!");
-            return 0;
-        }
         String temp = String.valueOf(endingTime);
         if(temp.charAt(2)>='6')
             endingTime+=40;
         
         //get lunch interval of all friends
-        int[][] friendsLunchTime = getLunchInterval();
+        int[][] friendsLunchTime = getLunchInterval(divingrate);
 
         //friends who have lunch within the same period
         int[][] canHaveLunch = new int[size][3];    //store friends' id, lunchstart time, lunchend time
         int AvailableFriends = 0;                   //number of friends    
         int exceed = 0;
         for(int i=0;i<friendsLunchTime.length;i++){
+            if(user.id.equals(friendsLunchTime[i][0]))
+                continue;
             if(friendsLunchTime[i][1]<endingTime&&friendsLunchTime[i][2]>startingTime){ //must start before you end or end after you start
                 canHaveLunch[AvailableFriends] = friendsLunchTime[i];
                 if(friendsLunchTime[i][1]<startingTime)
@@ -303,81 +301,118 @@ public class Graph<T> {
             }
            
         }
-
         
+        //if no friend available
+        if(AvailableFriends==0){
+            System.out.println("Sorry! No one is available on your lunch time.\nHave a good lunch on yourself!");
+            return 0;
+        }
         
+        int righttime;
         //if only 1 friend available
         if(AvailableFriends==1){
-            System.out.println("Have Lunch with "+canHaveLunch[1][0]+" from "+canHaveLunch[1][1]+" to "+canHaveLunch[1][2]);
-            return 1;
-        }
-                      
-        //sort friends' lunch period increasingly according to their lunch end time
-        for(int i=0;i<AvailableFriends;i++){
-            for(int j=0;j<AvailableFriends-1-i;j++){
-                if(canHaveLunch[j][2]>canHaveLunch[j+1][2]){
-                int[] hold = canHaveLunch[j];
-                canHaveLunch[j] = canHaveLunch[j+1];
-                canHaveLunch[j+1] = hold;
-                }
-                else if(canHaveLunch[j][2]==canHaveLunch[j+1][2]){//if lunch end same, sort according to lunch start time
-                    if(canHaveLunch[j][1]>canHaveLunch[j+1][1]){
-                        int[] hold = canHaveLunch[j];
-                        canHaveLunch[j] = canHaveLunch[j+1];
-                        canHaveLunch[j+1] = hold;
-                        }
-                }
-                    
-            }
+            System.out.println("Congrats! You can gain maximum of 1 rep points by having lunch following the suggested time:");
+            System.out.println("Have Lunch with "+canHaveLunch[0][0]+" from "+canHaveLunch[0][1]+" to "+canHaveLunch[0][2]);
+            righttime = 1;
             
-        }
+        }else{
 
+            //sort friends' lunch period increasingly according to their lunch end time
+            for(int i=0;i<AvailableFriends;i++){
+                for(int j=0;j<AvailableFriends-1-i;j++){
+                    if(canHaveLunch[j][2]>canHaveLunch[j+1][2]){
+                    int[] hold = canHaveLunch[j];
+                    canHaveLunch[j] = canHaveLunch[j+1];
+                    canHaveLunch[j+1] = hold;
+                    }
+                    else if(canHaveLunch[j][2]==canHaveLunch[j+1][2]){//if lunch end same, sort according to lunch start time
+                        if(canHaveLunch[j][1]>canHaveLunch[j+1][1]){
+                            int[] hold = canHaveLunch[j];
+                            canHaveLunch[j] = canHaveLunch[j+1];
+                            canHaveLunch[j+1] = hold;
+                            }
+                    }
 
+                }
 
-
-
-
-        //printing
-        int righttime = 0; 
-        String print = "";
-        for(int i=0;i<AvailableFriends;i++){
-            if(i==0){
-                print+="Have Lunch with "+canHaveLunch[i][0]+" from "+canHaveLunch[i][1]+" to "+canHaveLunch[i][2];
-
-            }else{
-                if(canHaveLunch[i][2]==canHaveLunch[i-1][2])
-                    continue;
-                else if(canHaveLunch[i][1]>canHaveLunch[i-1][2])
-                    print+="\nHave Lunch with "+canHaveLunch[i][0]+" from "+canHaveLunch[i][1]+" to "+canHaveLunch[i][2];
-                else
-                    print+="\nHave Lunch with "+canHaveLunch[i][0]+" from "+(canHaveLunch[i-1][2]+1)+" to "+canHaveLunch[i][2];
             }
 
-            righttime++;   
 
+
+
+
+
+            //printing
+            righttime = 0; 
+            String print = "";
+            for(int i=0;i<AvailableFriends;i++){
+                if(i==0){
+                    print+="Have Lunch with "+canHaveLunch[i][0]+" from "+canHaveLunch[i][1]+" to "+canHaveLunch[i][2];
+
+                }else{
+                    if(canHaveLunch[i][2]==canHaveLunch[i-1][2])
+                        continue;
+                    else if(canHaveLunch[i][1]>canHaveLunch[i-1][2])
+                        print+="\nHave Lunch with "+canHaveLunch[i][0]+" from "+canHaveLunch[i][1]+" to "+canHaveLunch[i][2];
+                    else
+                        print+="\nHave Lunch with "+canHaveLunch[i][0]+" from "+(canHaveLunch[i-1][2]+1)+" to "+canHaveLunch[i][2];
+                }
+
+                righttime++;   
+
+            }
+
+            System.out.println("Congrats! You can gain maximum of " + righttime + " rep points by having lunch following the suggested time:");
+            System.out.println(print + "\n");
         }
-
-        System.out.println("Congrats! You can gain maximum of " + righttime + " rep points by having lunch following the suggested time:");
-        System.out.println(print + "\n");
+        
+        Scanner in = new Scanner(System.in);
+        System.out.print("Do you want to follow the suggested plan and have lunch with the above people? (YES/NO): ");
+        String text = in.nextLine();
+        if(text.equalsIgnoreCase("yes")){
+           
+            for(int i=0;i<AvailableFriends;i++){
+                if(i!=0&&canHaveLunch[i][2]==canHaveLunch[i-1][2])
+                    continue;
+                Vertex<T> currentVertex = head;
+                while(currentVertex!=null){
+                    if(currentVertex.vertexInfo.id.equals(canHaveLunch[i][0])){
+                        int temporary = getRep(currentVertex.vertexInfo,user);
+                        if(temporary<0)                            
+                            setRep(currentVertex.vertexInfo,user,1);
+                        else
+                            setRep(currentVertex.vertexInfo,user,temporary+1);
+                        System.out.println("Your rep with " + currentVertex.vertexInfo.id + " is now " +getRep(currentVertex.vertexInfo,user));
+                        break;
+                    }
+                    currentVertex = currentVertex.nextVertex;
+                }
+            }
+        }else{
+            System.out.println("OK! Have a good lunch!");
+        }
+            
         return righttime;
     }
     
     
     //return lunch interval(start and end) of each friends
-    private int[][] getLunchInterval(){
+    private int[][] getLunchInterval(int divingrate){
         Vertex<T> vertex = head;
         int[][] lunchtime = new int[size][3];
         int i=0;
         while(vertex!=null){
-            int lunchEnd = vertex.vertexInfo.lunchStart + vertex.vertexInfo.lunchPeriod;
-            String temp = String.valueOf(lunchEnd);
-            if(temp.charAt(2)>='6')
-                lunchEnd+=40;
-            lunchtime[i][0] = (Integer)vertex.vertexInfo.id;
-            lunchtime[i][1] = vertex.vertexInfo.lunchStart;
-            lunchtime[i][2] = lunchEnd;
-            
-            i++;
+            if(vertex.vertexInfo.dive<=divingrate){
+                int lunchEnd = vertex.vertexInfo.lunchStart + vertex.vertexInfo.lunchPeriod;
+                String temp = String.valueOf(lunchEnd);
+                if(temp.charAt(2)>='6')
+                    lunchEnd+=40;
+                lunchtime[i][0] = (Integer)vertex.vertexInfo.id;
+                lunchtime[i][1] = vertex.vertexInfo.lunchStart;
+                lunchtime[i][2] = lunchEnd;
+
+                i++;
+            }
             vertex = vertex.nextVertex;
         }
         
@@ -388,20 +423,22 @@ public class Graph<T> {
     
     
     /*Event 5: can I prevent the rumour from spreading?
-    
+    two vertex, one node one stranger, find the path between them and check if it is possible to stop them
+    method: use breadth first search to propagate rumour
     */
     
      
      
-     public int canPreventRumour(VertexInfo<T> stranger,VertexInfo<T> crush){
+    private int spreadPath(VertexInfo<T> stranger,VertexInfo<T> crush){
         Queue<Vertex<T>> queue = new ArrayDeque<>();
         Set<Vertex<T>> alreadyVisited = new HashSet<>();    //to avoid visiting same vertex again
-        Vertex<T> startVertex = head;
+        
         Vertex<T>[] pred = new Vertex[size];
         for(int i=0;i<size;i++){
             pred[i] = null;
         }
-        //set sourceVertex as the start of bfs
+        //set sourceVertex(stranger) as the start of bfs
+        Vertex<T> startVertex = head;
         while(startVertex!=null){
             if(startVertex.vertexInfo.equals(stranger)){
                 queue.add(startVertex);
@@ -409,12 +446,13 @@ public class Graph<T> {
             }
             startVertex=startVertex.nextVertex;
         }
+        
         Vertex<T> currentVertex;            
         int day=0;
-        
+        System.out.print("\n----------The rumour is propagating...----------");
         while(!queue.isEmpty()){
             int day_size = queue.size();
-            System.out.println("\nDay " + day + ":");
+            System.out.print("\nDay " + day + "--->");
             while(day_size--!=0){
                 currentVertex = queue.remove();
                 System.out.print(currentVertex.vertexInfo.id + " ");
@@ -426,87 +464,166 @@ public class Graph<T> {
                         pred[getIndex(currentVertex.vertexInfo)] = neighbours.get(i);
                     }
                 }
-                queue.removeAll(neighbours);
-                queue.addAll(neighbours);
+                
+                queue.addAll(neighbours);//avoid having 2 same vertex in queue
                 queue.removeAll(alreadyVisited);
-                    
+                
+                //if reached destination(crush)
                 if(currentVertex.vertexInfo.equals(crush)){
-                    System.out.println("\nIt only takes " + day + " days to reach your crush!");
-                    ArrayList<Vertex<T>> upper = new ArrayList<>();
-                    for(int i=0;i<neighbours.size();i++){
-                        if(alreadyVisited.contains(neighbours.get(i))){
-                            upper.add(neighbours.get(i));
-                        }
-                    }
-                    
-                    
-                    if(upper.size()<day){
-                        int temp = 0;
-                        System.out.println("To stop it, you need to convince: " );
-                        for(Vertex<T> a:upper){
-                            System.out.print(a.vertexInfo.id + " on day " + ++temp);
-                            System.out.println("");
-                            
-                        }
-
-                    }else{
-                        
-                    }
-
-                    
-                    //get shortest path
-                        LinkedList<Vertex<T>> path = new LinkedList<Vertex<T>>();
-                        Vertex<T> crawl = head;
-                        while(crawl!=null){
-                            if(crawl.vertexInfo.equals(crush))
-                                break;
-                            crawl = crawl.nextVertex;
-                        }
-                        path.add(crawl);
-                        while(pred[getIndex(crawl.vertexInfo)]!=null){
-                            path.add(pred[getIndex(crawl.vertexInfo)]);
-                            crawl = pred[getIndex(crawl.vertexInfo)];
-                        }
-                        for(int j=path.size()-1;j>=0;j--){
-                            System.out.print(path.get(j).vertexInfo.id + " ");
-                        }
-                    
                     return day;
+                   
                 }
             }day++;
             
             
             
         }
-        
-        
-        System.out.println("Don't worry, your crush will never know about the rumour!");
         return -1;
-         
-         
      }
      
+      public void canPreventRumour(VertexInfo<T> stranger,VertexInfo<T> crush){
+        int dayspread = spreadPath(stranger,crush);
+        if(dayspread>0){
+            System.out.println("\nLook! The rumour only takes "+dayspread+" days to reach your crush.");
+        
+        }else{
+            System.out.println("\nDon't worry, your crush will never know about the rumour!");
+            return;
+        }
+        Queue<List<Vertex<T>>> queue = new ArrayDeque<>();  //to store the paths
+        List<Vertex<T>> pathed = new ArrayList<>();         //to store current path
+        List<List<Vertex<T>>> toCrush = new ArrayList<>();
+        ArrayList<Vertex<T>> neighbours;
+      
+        //set sourceVertex as the start of bfs
+        Vertex<T> startVertex = head;
+        while(startVertex!=null){
+            if(startVertex.vertexInfo.equals(stranger)){
+                pathed.add(startVertex);
+                break;
+            }
+            startVertex=startVertex.nextVertex;
+        }
+        queue.offer(pathed);
+        Vertex<T> currentVertex;            
+        
+        while(!queue.isEmpty()){
+        
+                pathed = queue.remove();
+                currentVertex = pathed.get(pathed.size()-1);
+                if(currentVertex.vertexInfo.equals(crush)){
+                    toCrush.add(pathed);
+                }
+                neighbours = getNeighbors(currentVertex.vertexInfo);
+
+                for(int i=0;i<neighbours.size();i++){
+                    if(!pathed.contains(neighbours.get(i))){
+                        List<Vertex<T>> newpath = new ArrayList<>(pathed);
+                        newpath.add(neighbours.get(i));
+                        queue.offer(newpath);
+                    }
+                }
+          
+        }
+        
+        if(toCrush.size()!=0){
+            System.out.println("\n----------Checking possible path----------\nHere are the " + toCrush.size() + " possible path to let your crush know. ");
+            for(int i=0;i<toCrush.size();i++){
+                System.out.print("Path " +(i+1) + ": ");
+                for(int j=0;j<toCrush.get(i).size();j++){
+                    System.out.print(toCrush.get(i).get(j).vertexInfo.id);
+                    if(j!=toCrush.get(i).size()-1)
+                        System.out.print("---->");
+                    else
+                        System.out.println("");
+                    
+                }
+                
+            }
+            System.out.println("\n------Checking ways to stop the rumour-----");
+            if(toCrush.get(0).size()>1){//shortest path must take more than 1 day
+                if(toCrush.size()==1){//only one path
+                    System.out.println("GOOD NEWS! It is possible to stop the spread!\nTo stop the rumour, you will need to\nOn Day 1: Convince " + toCrush.get(0).get(toCrush.get(0).size()-2).vertexInfo.id );
+                }else{//more than 1 path
+                    int[] mutualnode = new int[toCrush.get(0).size()];
+                    
+                    //case 1: every path have mutual node
+                    for(int i=1;i<toCrush.get(0).size()-1;i++){
+                        Vertex<T> lastVertex = toCrush.get(0).get(i);
+                        boolean truenode = true;
+                        for(int j=1;j<toCrush.size();j++){
+                            if(!toCrush.get(j).contains(lastVertex)){//all path have mutual node
+                                truenode = false;
+                                continue;
+                            }
+                            if(truenode)
+                                mutualnode[i]++;
+                        }
+                        if(truenode){
+                            System.out.println("GOOD NEWS! It is possible to stop the spread!\nTo stop the rumour, you will need to: \nOn Day 1: Convince " + toCrush.get(0).get(i).vertexInfo.id );
+                            return;
+                        }
+                    }
+                    
+                    //case 2: path do not have mutual node
+                    int max = mutualnode[0];
+                    int maxindex = 0;
+                    for(int i=1;i<mutualnode.length;i++){
+                        if(mutualnode[i]>=max){
+                            max = mutualnode[i];
+                            maxindex = i;
+                        }
+                    }
+                    Vertex<T> mutualNode = toCrush.get(0).get(maxindex);
+                    int nodetoconvince = toCrush.size()-max;// total number of path - mutual node between the path + 1(didnt add 1 in the formula because max doesnt include path 1)  
+                    if(nodetoconvince<dayspread){
+                        System.out.println("GOOD NEWS! It is possible to stop the spread!\nTo stop the rumour, you will need to: \nOn Day 1: Convince " + mutualNode.vertexInfo.id);
+                        
+                        for(int z=0,i=2;z<toCrush.size()&&i<=nodetoconvince;z++){
+                            if(!toCrush.get(z).contains(mutualNode)){
+                                System.out.println("On Day " + i + ": Convince " + toCrush.get(z).get(toCrush.get(z).size()-2));
+                                i++;
+                            }
+                        }
+                    }else{
+                        System.out.println("Sorry, you do not have time to convince enough people!");
+                    }
+                }
+            }else{
+                System.out.println("Sorry, you do not have time to convince enough people!");
+            }
+            
+           
+        }else{
+            System.out.println("Don't worry, your crush will never know about the rumour!");
+            
+        }
+            
+        
+         
+         
+     }    
+     //End of event 5
+     
      //extra feature
-     public int UpgradedEatLunchwMaxRep(int lunchstart, int lunchperiod){
+     public int UpgradedEatLunchwMaxRep(int lunchstart, int lunchperiod, VertexInfo<T> user, int divingrate){
         //get lunch interval of user
         int startingTime = lunchstart;
         int endingTime = lunchstart+lunchperiod;
-        if(lunchperiod<=5||lunchperiod>=60){
-            System.out.println("You lunch period is not healthy!!\nPlease make your lunch period longer than 5 minutes and shorter than 60 minutes!");
-            return 0;
-        }
         String temp = String.valueOf(endingTime);
         if(temp.charAt(2)>='6')
             endingTime+=40;
         
         //get lunch interval of all friends
-        int[][] friendsLunchTime = getLunchInterval();
+        int[][] friendsLunchTime = getLunchInterval(divingrate);
         
         //friends who have lunch within the same period
         int[][] canHaveLunch = new int[size][3];    //store friends' id, lunchstart time, lunchend time
         int AvailableFriends = 0;                   //number of friends    
         int exceed = 0;
         for(int i=0;i<friendsLunchTime.length;i++){
+            if(user.id.equals(friendsLunchTime[i][0]))
+                continue;
             if(friendsLunchTime[i][1]<endingTime&&friendsLunchTime[i][2]>startingTime){ //must start before you end or end after you start
                 canHaveLunch[AvailableFriends] = friendsLunchTime[i];
                 if(friendsLunchTime[i][1]<startingTime)
@@ -520,75 +637,108 @@ public class Graph<T> {
                 
         }
         
-        
+        //if no friend available
+        if(AvailableFriends==0){
+            System.out.println("Sorry! No one is available on your lunch time.\nHave a good lunch on yourself!");
+            return 0;
+        }
         
         //if only 1 friend available
         if(AvailableFriends==1){
-            System.out.println("Have Lunch with "+canHaveLunch[1][0]+" from "+canHaveLunch[1][1]+" to "+canHaveLunch[1][2]);
-            return 1;
-        }
-                      
-        //sort friends' lunch period increasingly according to their lunch end time
-        for(int i=0;i<AvailableFriends;i++){
-            for(int j=0;j<AvailableFriends-1-i;j++){
-                if(canHaveLunch[j][2]>canHaveLunch[j+1][2]){
-                int[] hold = canHaveLunch[j];
-                canHaveLunch[j] = canHaveLunch[j+1];
-                canHaveLunch[j+1] = hold;
-                }
-                else if(canHaveLunch[j][2]==canHaveLunch[j+1][2]){//if lunch end same, sort according to lunch start time
-                    if(canHaveLunch[j][1]>canHaveLunch[j+1][1]){
-                        int[] hold = canHaveLunch[j];
-                        canHaveLunch[j] = canHaveLunch[j+1];
-                        canHaveLunch[j+1] = hold;
-                        }
-                }
-                    
-            }
+            System.out.println("Congrats! You can gain maximum of 1 rep points by having lunch following the suggested time:");
+            System.out.println("Have Lunch with "+canHaveLunch[0][0]+" from "+canHaveLunch[0][1]+" to "+canHaveLunch[0][2]);
             
+        }else{
+
+            //sort friends' lunch period increasingly according to their lunch end time
+            for(int i=0;i<AvailableFriends;i++){
+                for(int j=0;j<AvailableFriends-1-i;j++){
+                    if(canHaveLunch[j][2]>canHaveLunch[j+1][2]){
+                    int[] hold = canHaveLunch[j];
+                    canHaveLunch[j] = canHaveLunch[j+1];
+                    canHaveLunch[j+1] = hold;
+                    }
+                    else if(canHaveLunch[j][2]==canHaveLunch[j+1][2]){//if lunch end same, sort according to lunch start time
+                        if(canHaveLunch[j][1]>canHaveLunch[j+1][1]){
+                            int[] hold = canHaveLunch[j];
+                            canHaveLunch[j] = canHaveLunch[j+1];
+                            canHaveLunch[j+1] = hold;
+                            }
+                    }
+
+                }
+
+            }
+
+            if(AvailableFriends<=3){
+                System.out.println("\nCongrats! You can gain maximum of " + AvailableFriends + " rep points\nThe table will move as follows");
+
+                System.out.println("--------------TABLE--------------");
+                for(int i=0;i<AvailableFriends;i++){
+                    for(int a:canHaveLunch[i])
+                        System.out.print(a + " ");
+                System.out.println("");
+                }
+                System.out.println("");
+
+            }else{
+
+                    for(int i=3;i<AvailableFriends;i++){
+                        if(canHaveLunch[i][1]<=canHaveLunch[i-3][2])
+                            canHaveLunch[i][1] = canHaveLunch[i-3][2]+1;
+                        if(canHaveLunch[i][1]>=canHaveLunch[i][2]){
+                            for(int z=i;z<AvailableFriends;z++){//remove unavailable friend
+                                canHaveLunch[z] = canHaveLunch[z+1];
+                            }
+                            i--;
+                            AvailableFriends--;
+                        }
+
+                    }
+                
+            
+            System.out.println("\nCongrats! You can gain maximum of " + AvailableFriends + " rep points\nThe table will move as follows");
+
+            for(int i=0;i<AvailableFriends-2;i++){
+                System.out.println("--------------TABLE--------------");
+                for(int j=i;j<i+3;j++){
+                    System.out.println(canHaveLunch[j][0] + " from " + canHaveLunch[j][1] + " to " + canHaveLunch[j][2]);
+                }
+                System.out.println("---------------------------------");
+
+                if(i!=AvailableFriends-3){
+                    System.out.println("On " + canHaveLunch[i][2] + ",  "+canHaveLunch[i][0] + " finished lunch and left the table");
+                    System.out.println("On " + canHaveLunch[i+3][1] + ",  "+canHaveLunch[i+3][0] + " joined the table");
+                }
+            }
+
+            }
         }
         
-        if(AvailableFriends<=3){
-            System.out.println("Congrats! You can gain maximum of " + AvailableFriends + " rep points\nThe table will move as follows");
-
-            System.out.println("--------------TABLE--------------");
+        Scanner in = new Scanner(System.in);
+        System.out.print("Do you want to follow the suggested plan and have lunch with the above people? (YES/NO): ");
+        String text = in.nextLine();
+        if(text.equalsIgnoreCase("yes")){
+           
             for(int i=0;i<AvailableFriends;i++){
-                for(int a:canHaveLunch[i])
-                    System.out.print(a + " ");
-            System.out.println("");
-            }
-   
-            return AvailableFriends;
-        }
-
-        for(int i=3;i<AvailableFriends;i++){
-            if(canHaveLunch[i][1]<=canHaveLunch[i-3][2])
-                canHaveLunch[i][1] = canHaveLunch[i-3][2]+1;
-            if(canHaveLunch[i][1]>=canHaveLunch[i][2]){
-                for(int z=i;z<AvailableFriends;z++){//remove unavailable friend
-                    canHaveLunch[z] = canHaveLunch[z+1];
+                Vertex<T> currentVertex = head;
+                while(currentVertex!=null){
+                    if(currentVertex.vertexInfo.id.equals(canHaveLunch[i][0])){
+                        int temporary = getRep(currentVertex.vertexInfo,user);
+                        if(temporary<0)                            
+                            setRep(currentVertex.vertexInfo,user,1);
+                        else
+                            setRep(currentVertex.vertexInfo,user,temporary+1);
+                        System.out.println("Your rep with " + currentVertex.vertexInfo.id + " is now " +getRep(currentVertex.vertexInfo,user));
+                        break;
+                    }
+                    currentVertex = currentVertex.nextVertex;
                 }
-                i--;
-                AvailableFriends--;
             }
-                
+        }else{
+            System.out.println("OK! Have a good lunch!");
         }
-        System.out.println("Congrats! You can gain maximum of " + AvailableFriends + " rep points\nThe table will move as follows");
-
-        for(int i=0;i<AvailableFriends-2;i++){
-            System.out.println("--------------TABLE--------------");
-            for(int j=i;j<i+3;j++){
-                System.out.println(canHaveLunch[j][0] + " from " + canHaveLunch[j][1] + " to " + canHaveLunch[j][2]);
-            }
-            System.out.println("---------------------------------");
-            
-            if(i!=AvailableFriends-3){
-                System.out.println("On " + canHaveLunch[i][2] + ",  "+canHaveLunch[i][0] + " finished lunch and left the table");
-                System.out.println("On " + canHaveLunch[i+3][1] + ",  "+canHaveLunch[i+3][0] + " joined the table");
-            }
-                
-        }
-         System.out.println(AvailableFriends);    
+        
         return AvailableFriends;
 
         
