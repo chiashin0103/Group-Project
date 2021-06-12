@@ -41,7 +41,6 @@ public class Main {
             enemy.addEnemyVertex(i);
         }
         //initialize relationship(edges) according to Figure 1 with reputation respectively
-        System.out.println("Adding edges...");
         graph.addEdge(v1, v7, 4);
         graph.addEdge(v1, v2, 5);
         graph.addEdge(v2, v6, 9);
@@ -60,17 +59,31 @@ public class Main {
         graph.addEdge(v10, v9, 6);
         enemy.addEnemyEdge(v1, v3);
         enemy.addEnemyEdge(v2, v10);
+//        graph.addEdge(v5, v7, 6);
+//        graph.addEdge(v7, v5, 6);
+//        graph.addEdge(v4, v2, 6);
+//        graph.addEdge(v2, v4, 6);
 
         String end = "";
 
         
+        System.out.println("------------------------------------------Welcome to Sociopath!-----------------------------------------");
         while (!"Yes".equalsIgnoreCase(end)) {
             boolean isok = false;
             int event = 1;
 
             while (!isok) {
                 try {
-                    System.out.println("Enter the Event you want 1,2,3,4,5,6 or extra features 7,8");
+                    System.out.println("Please choose from one of the following event.\n"
+                            + "1) Teaching a stranger to solve lab questions\n"
+                            + "2) Chit-chat\n"
+                            + "3) Lunch time\n"
+                            + "4) Arranging books\n"
+                            + "5) Meet your crush\n"
+                            + "6) Friendship\n"
+                            + "7) Social dynamics\n"
+                            + "8) Parallel farming");
+                            
                     event = input.nextInt();
                     isok = true;
                 } catch (InputMismatchException e) {
@@ -105,17 +118,17 @@ public class Main {
 
                         {
                             graph.addEdge( people[teaching - 1],people[we - 1],10);// no edges so we connect them 
-                            System.out.println("You and " + teaching + " are new friend with rep point " + graph.getRep(people[teaching - 1],people[we - 1]));
+                            System.out.println("You and " + teaching + " are now friends with rep point " + graph.getRep(people[teaching - 1],people[we - 1]));
 
                         }
                     } else {// answer is no
 
                         graph.addEdge(people[teaching - 1],people[we - 1],2);//rep will set to 2
-                        System.out.println("You and " + teaching + " are friend now with rep point " + graph.getRep(people[teaching - 1],people[we - 1]));
+                        System.out.println("You and " + teaching + " are now friends with rep point " + graph.getRep(people[teaching - 1],people[we - 1]));
 
                     }
                     System.out.println(banner);
-                    System.out.println("Press any key to continue. Type YES if you want to end the program");
+                    System.out.println("Enter any key to continue. Type YES if you want to end the program");
                     end = input.next();
                     break;
                     //END OF EVENT 1
@@ -311,10 +324,10 @@ public class Main {
                             }
                     }
                     
-                    
+                    System.out.println("The new friendship are as follows: ");
                     graph.printEdges();
                     System.out.println(banner);
-                    System.out.println("Press any key to continue. Type YES if you want to end the program");
+                    System.out.println("Enter any key to continue. Type YES if you want to end the program");
                     end = input.next();
                     break;
                 }
@@ -323,14 +336,28 @@ public class Main {
                 case 3: {
                     System.out.println(banner);
                     //Event 3
+                    System.out.print("Enter your id: ");
+                    int we = input.nextInt();
                     System.out.print("Enter your lunch time today (eg. 1105): ");
                     int lunchtime = input.nextInt();
+                    while(lunchtime<1100||lunchtime>1400){
+                        System.out.print("Please enter a valid LUNCH time: ");
+                        lunchtime = input.nextInt();
+                    }
                     System.out.print("Enter how long do you want to have lunch today (5 to 60 minutes): ");
                     int lunchperiod = input.nextInt();
-                    graph.eatLunchwMaxRep(lunchtime,lunchperiod);
+                    while(lunchperiod<=5||lunchperiod>=60){
+                        System.out.println("You lunch period is not healthy!!\nPlease make your lunch period longer than 5 minutes and shorter than 60 minutes!");
+                        System.out.print("Enter how long do you want to have lunch today (5 to 60 minutes): ");
+                        lunchperiod = input.nextInt();
+                    }
+                    System.out.print("Free-riders are annoying, I know, and I understand if you would rather not have any relationship with people with high diving rate."
+                            + "\nWhat is the maximum diving rate you can accept for the person who have lunch with you? (0-100): ");
+                    int divrate = input.nextInt();
+                    graph.eatLunchwMaxRep(lunchtime,lunchperiod,people[we-1],divrate);
                     
                     System.out.println(banner);
-                    System.out.println("Press any key to continue. Type YES if you want to end the program");
+                    System.out.println("Enter any key to continue. Type YES if you want to end the program");
                     end=input.next();
                     break;
                 }
@@ -379,7 +406,7 @@ public class Main {
                     System.out.println("The number of round(s): " + count);
                     
                     System.out.println(banner);
-                    System.out.println("Press any key to continue. Type YES if you want to end the program");
+                    System.out.println("Enter any key to continue. Type YES if you want to end the program");
                     end=input.next();
                     break;
 
@@ -389,21 +416,21 @@ public class Main {
                 case 5: {
                     System.out.println(banner);
                     //Event 5
-                    System.out.println("Enter Where the rumors Start");
+                    System.out.print("Enter the stranger's id who start the rumour: ");
                     int rumors = input.nextInt();
                     ArrayList<Integer> Oureneighbour = graph.getNeighbours(people[rumors - 1]);
-                    System.out.println("Enter who u are your crush");
+                    System.out.print("Enter your crush's id: ");
                     int crush = input.nextInt();
 
                     while (crush == rumors) {
-                        System.out.println("Please enter a valid input");
+                        System.out.print("Please enter a valid input: ");
                         crush = input.nextInt();
                     }
                     graph.canPreventRumour(people[rumors - 1], people[crush - 1]);
                     System.out.println("");
                     
                     System.out.println(banner);
-                    System.out.println("Press any key to continue. Type YES if you want to end the program");
+                    System.out.println("Enter any key to continue. Type YES if you want to end the program");
                     end=input.next();
                     break;
                 }
@@ -477,28 +504,32 @@ public class Main {
                     board.setVisible(true);
                     
                     System.out.println(banner);
-                    System.out.println("Press any key to continue. Type YES if you want to end the program");
+                    System.out.println("Enter any key to continue. Type YES if you want to end the program");
                     end=input.next();
                     break;
                 }
-                /*Extra feature 2. Testing program*/
+                
+                
+                /*Extra feature */
                 case 7: {
+                    System.out.println(banner);
+                    //Event 7 - Social dynamics
                     System.out.println("");
                     System.out.println("-----------Check for Frenemy------------");
                     areyouFrenemy(graph, enemy, frenemy, v1, v3, v2);
                     areyouFrenemy(graph, enemy, frenemy, v2, v10, v5);
-                    /*case 1- middle friend is friend with your hater=frenemy*/
+                    System.out.println("Case 1- middle friend is friend with your hater=frenemy");
                     System.out.println("Vertex 1 and vertex 3 is enemy: " + enemy.hasEnemyEdge(v1, v3));
                     System.out.println("Vertex 2 and vertex 3 is enemy: " + enemy.hasEnemyEdge(v2, v3));
                     System.out.println("Vertex 2-->vertex 3 is frenemy: " + frenemy.hasFrenemyEdge(v2, v3));
                     System.out.println("Vertex 3-->vertex 2 is frenemy: " + frenemy.hasFrenemyEdge(v3, v2));
-                    /*case 2-middle friend have no relation with your hater*/
+                    System.out.println("Case 2- middle friend have no relation with your hater");
                     System.out.println("Vertex 2 and vertex 10 is enemy: " + enemy.hasEnemyEdge(v2, v10));
                     System.out.println("Vertex 5-->vertex 10 is frenemy: " + frenemy.hasFrenemyEdge(v5, v10));
                     System.out.println("Vertex 5 and vertex 10 is enemy: " + enemy.hasEnemyEdge(v5, v10));
 
                     System.out.println(banner);
-                    System.out.println("Press any key to continue. Type YES if you want to end the program");
+                    System.out.println("Enter any key to continue. Type YES if you want to end the program");
                     end=input.next();
                     break;
                 }
@@ -506,16 +537,30 @@ public class Main {
                 //extra feature 
                 case 8: {
                     System.out.println(banner);
-                    //Extra feature (upgraded event 3)
+                    //Event 8 - Parallel farming
                     System.out.println("Your account is upgraded! Now you can have lunch with 3 people at the same time");
+                    System.out.print("Enter your id: ");
+                    int we = input.nextInt();
                     System.out.print("Enter your lunch time today (eg. 1105): ");
                     int lunchtime = input.nextInt();
+                    while(lunchtime<1100||lunchtime>1400){
+                        System.out.print("Please enter a valid LUNCH time: ");
+                        lunchtime = input.nextInt();
+                    }
                     System.out.print("Enter how long do you want to have lunch today (5 to 60 minutes): ");
                     int lunchperiod = input.nextInt();
-                    graph.UpgradedEatLunchwMaxRep(lunchtime,lunchperiod);
+                    while(lunchperiod<=5||lunchperiod>=60){
+                        System.out.println("You lunch period is not healthy!!\nPlease make your lunch period longer than 5 minutes and shorter than 60 minutes!");
+                        System.out.print("Enter how long do you want to have lunch today (5 to 60 minutes): ");
+                        lunchperiod = input.nextInt();
+                    }
+                    System.out.print("Free-riders are annoying, I know, and I understand if you would rather not have any relationship with people with high diving rate."
+                            + "\nWhat is the maximum diving rate you can accept for the person who have lunch with you? (0-100): ");
+                    int divrate = input.nextInt();
+                    graph.UpgradedEatLunchwMaxRep(lunchtime,lunchperiod,people[we-1],divrate);
                     
                     System.out.println(banner);
-                    System.out.println("Press any key to continue. Type YES if you want to end the program");
+                    System.out.println("Enter any key to continue. Type YES if you want to end the program");
                     end=input.next();
                     break;
                 }
