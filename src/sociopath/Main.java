@@ -29,7 +29,7 @@ public class Main {
         VertexInfo<Integer> v5 = new VertexInfo(5, 80, 1300, 50);
         VertexInfo<Integer> v6 = new VertexInfo(6, 20, 1320, 20);
         VertexInfo<Integer> v7 = new VertexInfo(7, 15, 1245, 30);
-        VertexInfo<Integer> v8 = new VertexInfo(8, 80, 1145, 25);
+        VertexInfo<Integer> v8 = new VertexInfo(8, 80, 1245, 31);
         VertexInfo<Integer> v9 = new VertexInfo(9, 55, 1233, 28);
         VertexInfo<Integer> v10 = new VertexInfo(10, 35, 1125, 35);
      
@@ -63,6 +63,8 @@ public class Main {
 //        graph.addEdge(v7, v5, 6);
 //        graph.addEdge(v4, v2, 6);
 //        graph.addEdge(v2, v4, 6);
+//        graph.addEdge(v10, v8, 6);
+//        graph.addEdge(v8, v10, 6);
 
         String end = "";
 
@@ -101,10 +103,11 @@ public class Main {
                     int we = input.nextInt();
                     System.out.print("Enter stranger's id who seek for your help: ");
                     int teaching = input.nextInt();
+                   
                     ArrayList<Integer> Oureneighbour = graph.getNeighbours(people[we - 1]);
-                    
-
-                    while (teaching == we || Oureneighbour.contains(teaching)) {
+                    ArrayList<Integer> hiseneighbour = graph.getNeighbours(people[teaching - 1]);
+ 
+                    while (teaching == we || Oureneighbour.contains(teaching)||hiseneighbour.contains(we)) {
                         System.out.print("He is not a stranger! Please enter a valid input:");
                         teaching = input.nextInt();
                     }
@@ -118,12 +121,14 @@ public class Main {
 
                         {
                             graph.addEdge( people[teaching - 1],people[we - 1],10);// no edges so we connect them 
+                            graph.addEdge( people[we-1],people[teaching-1],1);// no edges so we connect them 
                             System.out.println("You and " + teaching + " are now friends with rep point " + graph.getRep(people[teaching - 1],people[we - 1]));
 
                         }
                     } else {// answer is no
 
                         graph.addEdge(people[teaching - 1],people[we - 1],2);//rep will set to 2
+                        graph.addEdge(people[we-1],people[teaching-1],1);//rep will set to 1
                         System.out.println("You and " + teaching + " are now friends with rep point " + graph.getRep(people[teaching - 1],people[we - 1]));
 
                     }
@@ -376,16 +381,11 @@ public class Main {
 
                     //User input
                     System.out.print("Enter the heights of books: ");
-                    String input1 = s.next();
-                    input1 += s.nextLine();
-
-                    //store it in array
-                    String[] height = input1.split(" ");
-
-                    //convert to int array
-                    for (int i = 0; i < size; i++) {
-                        sort[i] = Integer.parseInt(height[i]);
+                    for (int i = 0; i < sort.length; i++) {
+                        sort[i] = s.nextInt();
                     }
+
+
 
                     do {
                         findRemove(sort);
@@ -500,7 +500,7 @@ public class Main {
                     }
 
                     board.add(panel);
-                    board.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                    board.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     board.setVisible(true);
                     
                     System.out.println(banner);
@@ -515,15 +515,58 @@ public class Main {
                     System.out.println(banner);
                     //Event 7 - Social dynamics
                     System.out.println("");
-                    System.out.println("-----------Check for Frenemy------------");
+                    System.out.println("-----------Social Dynamics------------");
+                    boolean checkhasRelation = false;
                     areyouFrenemy(graph, enemy, frenemy, v1, v3, v2);
                     areyouFrenemy(graph, enemy, frenemy, v2, v10, v5);
-                    System.out.println("Case 1- middle friend is friend with your hater=frenemy");
+                    System.out.println("Case 1- Enemy is not stranger to your friend");
+                    System.out.println("You are vertex 1");
+                    if (graph.hasEdge(v1, v2) == true || graph.hasEdge(v2, v1) == true) {
+                    checkhasRelation = true;
+                    System.out.println("Vertex 1 and vertex 2 is friend: " + checkhasRelation);
+                    }
+                    if (graph.hasEdge(v2, v3) == true || graph.hasEdge(v3, v2) == true) {
+                    checkhasRelation = true;
+                    System.out.println("Vertex 2 and vertex 3 is friend: " + checkhasRelation);
+                    if (checkhasRelation == true) {
+                    System.out.println("The reputation point between vertex 1 and 2 is " + graph.getRep(v1, v2));
+                    System.out.println("The reputation point between vertex 2 and 3 is " + graph.getRep(v3, v2));
+                    if (graph.getRep(v1, v2) > graph.getRep(v3, v2)) {
+                    System.out.println("Vertex 1 and 2 is best friend");
+                    } else {
+                    System.out.println("Vertex 2 and 3 is best friend");
+                    }
+                    }
+                    }
+
+
+
                     System.out.println("Vertex 1 and vertex 3 is enemy: " + enemy.hasEnemyEdge(v1, v3));
-                    System.out.println("Vertex 2 and vertex 3 is enemy: " + enemy.hasEnemyEdge(v2, v3));
                     System.out.println("Vertex 2-->vertex 3 is frenemy: " + frenemy.hasFrenemyEdge(v2, v3));
-                    System.out.println("Vertex 3-->vertex 2 is frenemy: " + frenemy.hasFrenemyEdge(v3, v2));
-                    System.out.println("Case 2- middle friend have no relation with your hater");
+                    System.out.println("");
+                    System.out.println("Case 2- Enemy is stranger to your friend");
+                    System.out.println("You are vertex 2, enemy is vertex 10, your friend is vertex 5");
+                    if (graph.hasEdge(v2, v5) == true || graph.hasEdge(v5, v2) == true) {
+                    checkhasRelation = true;
+                    System.out.println("Vertex 2 and vertex 5 is friend: " + checkhasRelation);
+                    }
+                    System.out.print("Vertex 5 and vertex 10 is friend: ");
+                    if (graph.hasEdge(v5, v10) == true || graph.hasEdge(v10, v5) == true) {
+                    checkhasRelation = true;
+                    if (checkhasRelation == true) {
+                    System.out.println("The reputation point between vertex 2 and 5 is " + graph.getRep(v2, v5));
+                    System.out.println("The reputation point between vertex 10 and 5 is " + graph.getRep(v5, v10));
+                    if (graph.getRep(v2, v5) > graph.getRep(v5, v10)) {
+                    System.out.println("Vertex 2 and 5 is best friend");
+                    } else {
+                    System.out.println("Vertex 5 and 10 is best friend");
+                    }
+                    }
+                    }else{
+                    checkhasRelation=false;
+                    }
+                    System.out.print(checkhasRelation);
+                    System.out.println("");
                     System.out.println("Vertex 2 and vertex 10 is enemy: " + enemy.hasEnemyEdge(v2, v10));
                     System.out.println("Vertex 5-->vertex 10 is frenemy: " + frenemy.hasFrenemyEdge(v5, v10));
                     System.out.println("Vertex 5 and vertex 10 is enemy: " + enemy.hasEnemyEdge(v5, v10));
