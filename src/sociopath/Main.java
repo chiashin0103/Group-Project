@@ -59,12 +59,6 @@ public class Main {
         graph.addEdge(v10, v9, 6);
         enemy.addEnemyEdge(v1, v3);
         enemy.addEnemyEdge(v2, v10);
-//        graph.addEdge(v5, v7, 6);
-//        graph.addEdge(v7, v5, 6);
-//        graph.addEdge(v4, v2, 6);
-//        graph.addEdge(v2, v4, 6);
-//        graph.addEdge(v10, v8, 6);
-//        graph.addEdge(v8, v10, 6);
 
         String end = "";
 
@@ -520,7 +514,7 @@ public class Main {
                     areyouFrenemy(graph, enemy, frenemy, v1, v3, v2);
                     areyouFrenemy(graph, enemy, frenemy, v2, v10, v5);
                     System.out.println("Case 1- Enemy is not stranger to your friend");
-                    System.out.println("You are vertex 1");
+                    System.out.println("You are vertex 1, enemy is vertex 3");
                     if (graph.hasEdge(v1, v2) == true || graph.hasEdge(v2, v1) == true) {
                     checkhasRelation = true;
                     System.out.println("Vertex 1 and vertex 2 is friend: " + checkhasRelation);
@@ -545,7 +539,7 @@ public class Main {
                     System.out.println("Vertex 2-->vertex 3 is frenemy: " + frenemy.hasFrenemyEdge(v2, v3));
                     System.out.println("");
                     System.out.println("Case 2- Enemy is stranger to your friend");
-                    System.out.println("You are vertex 2, enemy is vertex 10, your friend is vertex 5");
+                    System.out.println("You are vertex 2, enemy is vertex 10");
                     if (graph.hasEdge(v2, v5) == true || graph.hasEdge(v5, v2) == true) {
                     checkhasRelation = true;
                     System.out.println("Vertex 2 and vertex 5 is friend: " + checkhasRelation);
