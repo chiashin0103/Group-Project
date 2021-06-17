@@ -433,10 +433,7 @@ public class Graph<T> {
         Queue<Vertex<T>> queue = new ArrayDeque<>();
         Set<Vertex<T>> alreadyVisited = new HashSet<>();    //to avoid visiting same vertex again
         
-        Vertex<T>[] pred = new Vertex[size];
-        for(int i=0;i<size;i++){
-            pred[i] = null;
-        }
+        
         //set sourceVertex(stranger) as the start of bfs
         Vertex<T> startVertex = head;
         while(startVertex!=null){
@@ -459,11 +456,7 @@ public class Graph<T> {
                 
                 alreadyVisited.add(currentVertex);
                 ArrayList<Vertex<T>> neighbours = getNeighbors(currentVertex.vertexInfo);
-                for(int i=0;i<neighbours.size();i++){
-                    if(alreadyVisited.contains(neighbours.get(i))){
-                        pred[getIndex(currentVertex.vertexInfo)] = neighbours.get(i);
-                    }
-                }
+                
                 
                 queue.addAll(neighbours);//avoid having 2 same vertex in queue
                 queue.removeAll(alreadyVisited);
