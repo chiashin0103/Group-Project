@@ -16,10 +16,15 @@ public class LibraryBook {
         int count = 0;
         int[] sort = new int[size];
 
-        //User input
+       //User input
         System.out.print("Enter the heights of books: ");
-        for (int i = 0; i < sort.length; i++) {
-            sort[i] = s.nextInt();
+        String input1 = s.next();
+        input1 += s.nextLine();
+        //store it in array
+        String[] height = input1.split(" ");
+        //convert to int array
+        for (int i = 0; i < size; i++) {
+            sort[i] = Integer.parseInt(height[i]);
         }
 
         do {

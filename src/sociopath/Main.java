@@ -29,7 +29,7 @@ public class Main {
         VertexInfo<Integer> v5 = new VertexInfo(5, 80, 1300, 50);
         VertexInfo<Integer> v6 = new VertexInfo(6, 20, 1320, 20);
         VertexInfo<Integer> v7 = new VertexInfo(7, 15, 1245, 30);
-        VertexInfo<Integer> v8 = new VertexInfo(8, 80, 1245, 31);
+        VertexInfo<Integer> v8 = new VertexInfo(8, 80, 1145, 25);
         VertexInfo<Integer> v9 = new VertexInfo(9, 55, 1233, 28);
         VertexInfo<Integer> v10 = new VertexInfo(10, 35, 1125, 35);
      
@@ -87,16 +87,27 @@ public class Main {
                     System.out.println("Please enter integer value");
                 }
             }
-
+            
+            try{
             switch (event) {
 
                 case 1: {
                     System.out.println(banner);
                     //Event 1
-                    System.out.print("Enter your id: ");
-                    int we = input.nextInt();
-                    System.out.print("Enter stranger's id who seek for your help: ");
-                    int teaching = input.nextInt();
+                    
+                        System.out.print("Enter your id: ");
+                        int we = input.nextInt();
+                        while(we<1||we>10){
+                            System.out.print("Please enter a valid input: ");
+                            we = input.nextInt();
+                        }
+                        System.out.print("Enter stranger's id who seek for your help: ");
+                        int teaching = input.nextInt();
+                        while(teaching<1||teaching>10){
+                            System.out.print("Please enter a valid input: ");
+                            teaching = input.nextInt();
+                        }
+                   
                    
                     ArrayList<Integer> Oureneighbour = graph.getNeighbours(people[we - 1]);
                     ArrayList<Integer> hiseneighbour = graph.getNeighbours(people[teaching - 1]);
@@ -126,6 +137,7 @@ public class Main {
                         System.out.println("You and " + teaching + " are now friends with rep point " + graph.getRep(people[teaching - 1],people[we - 1]));
 
                     }
+                     
                     System.out.println(banner);
                     System.out.println("Enter any key to continue. Type YES if you want to end the program");
                     end = input.next();
@@ -138,10 +150,18 @@ public class Main {
                     String str = "";
                     System.out.print("Enter your id: ");
                     int we = input.nextInt();
+                    while(we<1||we>10){
+                        System.out.print("Please enter a valid input: ");
+                        we = input.nextInt();
+                    }
                     ArrayList<Integer> OureneighbourEvent2 = graph.getNeighbours(people[we - 1]);
                     
                     System.out.print("Enter your new friend's id: ");
                     int friend = input.nextInt();
+                    while(friend<1||friend>10){
+                        System.out.print("Please enter a valid input: ");
+                        friend = input.nextInt();
+                    }
 
                     while (friend == we){
                         System.out.print("Please enter a valid input: ");
@@ -337,9 +357,18 @@ public class Main {
                     //Event 3
                     System.out.print("Enter your id: ");
                     int we = input.nextInt();
+                    while(we<1||we>10){
+                        System.out.print("Please enter a valid input: ");
+                        we = input.nextInt();
+                    }
                     System.out.print("Enter your lunch time today (eg. 1105): ");
                     int lunchtime = input.nextInt();
                     while(lunchtime<1100||lunchtime>1400){
+                        System.out.print("Please enter a valid LUNCH time: ");
+                        lunchtime = input.nextInt();
+                    }
+                    
+                    while(String.valueOf(lunchtime).charAt(2)>='6'){
                         System.out.print("Please enter a valid LUNCH time: ");
                         lunchtime = input.nextInt();
                     }
@@ -353,6 +382,10 @@ public class Main {
                     System.out.print("Free-riders are annoying, I know, and I understand if you would rather not have any relationship with people with high diving rate."
                             + "\nWhat is the maximum diving rate you can accept for the person who have lunch with you? (0-100): ");
                     int divrate = input.nextInt();
+                    while(divrate<0||divrate>100){
+                        System.out.println("Please enter a valid number: ");
+                        divrate = input.nextInt();
+                    }
                     graph.eatLunchwMaxRep(lunchtime,lunchperiod,people[we-1],divrate);
                     
                     System.out.println(banner);
@@ -375,8 +408,17 @@ public class Main {
 
                     //User input
                     System.out.print("Enter the heights of books: ");
-                    for (int i = 0; i < sort.length; i++) {
-                        sort[i] = s.nextInt();
+                    String input1 = s.next();
+                    input1 += s.nextLine();
+                    //store it in array
+                    String[] height = input1.split(" ");
+                    //convert to int array
+                    try{
+                        for (int i = 0; i < size; i++) {
+                            sort[i] = Integer.parseInt(height[i]);
+                        }
+                    }catch(ArrayIndexOutOfBoundsException e){
+                        
                     }
 
 
@@ -412,9 +454,17 @@ public class Main {
                     //Event 5
                     System.out.print("Enter the stranger's id who start the rumour: ");
                     int rumors = input.nextInt();
+                     while(rumors<1||rumors>10){
+                        System.out.print("Please enter a valid input: ");
+                        rumors = input.nextInt();
+                    }
                     ArrayList<Integer> Oureneighbour = graph.getNeighbours(people[rumors - 1]);
                     System.out.print("Enter your crush's id: ");
                     int crush = input.nextInt();
+                     while(crush<1||crush>10){
+                        System.out.print("Please enter a valid input: ");
+                        crush = input.nextInt();
+                    }
 
                     while (crush == rumors) {
                         System.out.print("Please enter a valid input: ");
@@ -578,9 +628,17 @@ public class Main {
                     System.out.println("Your account is upgraded! Now you can have lunch with 3 people at the same time");
                     System.out.print("Enter your id: ");
                     int we = input.nextInt();
+                     while(we<1||we>10){
+                        System.out.print("Please enter a valid input: ");
+                        we = input.nextInt();
+                    }
                     System.out.print("Enter your lunch time today (eg. 1105): ");
                     int lunchtime = input.nextInt();
                     while(lunchtime<1100||lunchtime>1400){
+                        System.out.print("Please enter a valid LUNCH time: ");
+                        lunchtime = input.nextInt();
+                    }
+                    while(String.valueOf(lunchtime).charAt(2)>='6'){
                         System.out.print("Please enter a valid LUNCH time: ");
                         lunchtime = input.nextInt();
                     }
@@ -603,6 +661,10 @@ public class Main {
                 }
 
             }
+            }catch(InputMismatchException e){
+                    System.out.println("Invalid input! ");
+                    input.nextLine();
+                }
 
         }
 
